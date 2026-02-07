@@ -1,0 +1,44 @@
+/**
+ * Component: Button
+ */
+
+.button {
+    display: inline-flex;
+    //max-height: 65px;
+    min-height: 72px;
+    padding: 13px 35px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 124.5px;
+    border: 1px solid $dark-gold;
+    text-align: center;
+    
+    @include font_decorative();
+    color: $light-gold;
+    font-size: 18px;
+    line-height: 36px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 4.5px;
+    text-transform: lowercase;
+    
+    @include mq('desktop') {
+        color: $dark-gold;
+        font-size: 23px;
+        letter-spacing: 5.75px;
+    }
+    
+    &.button--filled {
+        border: 1px solid $dark-gold;
+        background: $dark-gold;
+        color: $dark-green;
+        min-height: 0;
+        
+        @include mq('desktop') {
+            font-size: 16px;
+            line-height: 15px;
+            letter-spacing: 4px;
+        }
+    }
+}

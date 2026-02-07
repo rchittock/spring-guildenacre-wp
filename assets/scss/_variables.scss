@@ -1,0 +1,130 @@
+//Breakpoints
+$breakpoints: (
+	"small": 468px,
+	"tablet": 768px,
+	"tablet-landscape": 1024px,
+	"desktop": 1280px,
+	"wide": 1440px,
+	"xl": 1600px,
+	"admin-bar": 783px
+);
+
+@mixin firefox() {
+	@-moz-document url-prefix() {
+		@content;
+	}
+}
+
+@mixin mq($width, $type: min) {
+	@if map_has_key($breakpoints, $width) {
+		$width: map_get($breakpoints, $width);
+		@if $type == max {
+			$width: $width - 1px;
+		}
+		@media only screen and (#{$type}-width: $width) {
+			@content;
+		}
+	}
+}
+
+@mixin tablet() {
+	@media screen and (min-width: 768px) and (max-width: 1199px) {
+		@content;	
+	}
+}
+
+@mixin desktop() {
+	@media screen and (min-width: 1200px) and (max-width: 1439px) {
+		@content;	
+	}
+}
+
+@mixin optional-at-root($sel) {
+	@at-root #{if(not &, $sel, selector-append(&, $sel))} {
+		@content;
+	}
+}
+
+@mixin placeholder {
+	@include optional-at-root('::-webkit-input-placeholder') {
+		@content;
+	}
+	
+	@include optional-at-root(':-moz-placeholder') {
+		@content;
+	}
+	
+	@include optional-at-root('::-moz-placeholder') {
+		@content;
+	}
+	
+	@include optional-at-root(':-ms-input-placeholder') {
+		@content;
+	}
+}
+
+@mixin font_sans() {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	font-weight: 400;
+}
+
+@mixin font_script() {
+	font-family: "Lavishly Yours", serif;
+	font-weight: 400;
+}
+
+@mixin font_decorative() {
+	font-family: "Cinzel", sans-serif;
+	//text-transform: lowercase;
+	font-weight: 400;
+}
+
+@mixin font_weight($weight) {
+	font-weight: $weight;
+	font-variation-settings: 'wght' $weight
+}
+
+@mixin transition() {
+	transition: all 0.3s ease-in-out;
+}
+
+:root {
+	--white: rgba(255, 255, 255, 1);
+	--black: rgba(0, 0, 0, 1);
+	
+	--off-white: #EFE6D9;
+	--off-black: #090B0D;
+	--green: #111E1A;	
+	--dark-green: #0E1A17;
+	--paper: #E9C488;
+	--light-gold: #FFC87B;
+	--dark-gold: #BC8F51;
+	
+	--error: #FC2727;
+	--plyr-color-main: var(--dark-green);
+}
+
+$white: var(--white);
+$black: var(--black);
+$off-white: var(--off-white);
+$off-black: var(--off-black);
+$green: var(--green);
+$dark-green: var(--dark-green);
+$paper: var(--paper);
+$light-gold: var(--light-gold);
+$dark-gold: var(--dark-gold);
+$error: var(--error);
+
+// $colours: ( 
+	// 'white' : $white,
+	// 'black' : $black,
+	// 'off-white' : $off-white,
+	// 'lime' : $lime,
+	// 'dark-green' : $dark-green,
+	// 'dark-green-2' : $dark-green-2
+// );
+// 
+// $opacity: ( 
+	// '35' : 0.35,
+	// '50' : 0.5,
+// );

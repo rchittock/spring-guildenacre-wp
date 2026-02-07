@@ -1,0 +1,53 @@
+.header {
+	
+	.container {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 25px;
+		max-width: none;
+		
+		@include mq('desktop') {
+			padding-inline: 148px;
+		}
+	}
+	
+	.logo {
+		
+		&,
+		svg,
+		img {
+			width: 159px;
+			height: auto;
+			
+			@include mq('desktop') {
+				width: 297px;
+			}
+		}
+		
+		@include mq('desktop') {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+	
+	.button {
+		margin-top: 30px;
+		
+		@include mq('desktop', 'max') {
+			display: none;	
+		}
+	}
+	
+	.mobile-menu-toggle {
+		margin-top: 19px;
+		
+		&,
+		svg {
+			width: 62px;
+			height: auto;
+		}
+	}
+}

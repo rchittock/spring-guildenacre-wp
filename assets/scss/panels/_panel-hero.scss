@@ -1,0 +1,91 @@
+.panel-hero {
+    position: relative;
+    
+    @include mq('desktop') {
+        padding-bottom: 128px;
+    }
+    
+    .sub-heading,
+    .heading {
+        color: $off-white;    
+    }
+    
+    .sub-heading {
+        
+        @include mq('desktop') {
+            padding-top: 276px;
+            margin-bottom: 32px;
+        }
+    }
+
+    .heading {
+        text-shadow: 0 0 105px $light-gold;
+    }
+
+    .button {
+        
+        @include mq('desktop') {
+            margin-top: 42px;
+            margin-bottom: 188px;
+        }
+        
+    }
+    
+    .divider {
+        
+        @include mq('desktop') {
+            margin-top: 42px;
+        }
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+        top: 129px;
+        left: 0;
+        width: 292px;
+        height: 328px;
+        background: transparent url('../svg/star-1.svg') 0 0 / contain no-repeat;
+    }
+
+    &::after {
+        top: 37px;
+        right: 96px;
+        left: auto;
+        width: 199px;
+        height: 224px;
+        background-image: url('../svg/star-2.svg')
+    }
+    
+    &.panel-left-star-position-middle {
+        &::before {
+            top: calc(50% - 164px);
+            bottom: auto;
+        }
+    }
+    
+    &.panel-left-star-position-bottom {
+        &::before {
+            top: auto;
+            bottom: 0;
+        }
+    }
+    
+    &.panel-right-star-position-middle {
+        &::after {
+            top: calc(50% - 112px);
+            bottom: auto;
+        }
+    }
+    
+    &.panel-right-star-position-bottom {
+        &::after {
+            top: auto;
+            bottom: 0;
+            right: -10px;
+            width: 353px;
+            height: 397px;
+        }
+    }
+}

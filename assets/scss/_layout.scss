@@ -1,0 +1,59 @@
+html, 
+body {
+	overscroll-behavior-y: none;
+	scroll-behavior: smooth;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+.wrapper {
+	overflow-x: hidden;
+}
+
+.container {
+	margin: 0 auto;
+	padding-inline: 20px;
+	
+	@include mq('desktop') {
+		max-width: calc(980px + 420px);
+		padding-inline: 210px;
+	}
+}
+
+.announcement-bar {
+	padding-block: 20px;
+	
+	@include mq('desktop') {
+		padding-block: 73px;
+		
+		font-size: 22px;
+		line-height: 35px;
+		letter-spacing: 1px;
+	}
+	
+	.container {
+		display: flex;
+		justify-content: center;
+		gap: 25px;
+		align-items: center;
+		
+		@include mq('desktop') {
+			padding-inline: 0;
+		}
+	}
+	
+	a {
+		font-weight: 600;
+		color: inherit;
+	}
+	
+	img {
+		--icon-size: 30px;
+		
+		flex: 0 0 var(--icon-size);
+		width: var(--icon-size);
+		height: var(--icon-size);
+	}
+}

@@ -1,0 +1,13 @@
+<div class="container">
+
+		<?php echo get_sub_field('sub_heading'); ?>
+
+		<h2 class="heading heading-2">
+		    <?php include('components/heading.php'); ?>
+		</h2>
+
+		<?php include('components/content.php'); ?>
+
+		<?php include('components/button.php'); ?>
+
+</div>

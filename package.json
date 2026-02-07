@@ -1,0 +1,43 @@
+{
+  "name": "Spring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.php",
+  "dependencies": {
+    "browser-sync": "^3.0.4",
+    "glightbox": "^3.2.0",
+    "gulp": "^4.0.2",
+    "node-fetch": "^2.6.1",
+    "sass": "^1.56.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "",
+    "gifsicle": "",
+    "gsap": "",
+    "gulp": "",
+    "gulp-concat": "",
+    "gulp-imagemin": "7.1.0",
+    "gulp-merge": "",
+    "gulp-postcss": "",
+    "gulp-rename": "",
+    "gulp-sass": "",
+    "gulp-sourcemaps": "",
+    "gulp-uglify": "",
+    "imagemin": "",
+    "imagesloaded": "^5.0.0",
+    "install": "",
+    "postcss-import": ""
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "browserslist": [
+    "> 0.3%",
+    "last 7 versions",
+    "Android >= 4",
+    "Firefox >= 20",
+    "iOS >= 6"
+  ],
+  "author": "Robert Chittock",
+  "license": "ISC"
+}
