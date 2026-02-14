@@ -1,15 +1,45 @@
 .panel-animal-icons {
 
     .icons {
+        display: flex;
+        justify-content: center;
+        gap: 28px;
+        align-items: center;
+        
+        @include mq('tablet') {
+            gap: 60px;
+        }
+        
+        @include mq('desktop') {
+            gap: 97px;
+        }
         
         .icon {
             
-            .image {
+            img {
+                display: inline-block;
+                object-fit: contain;
                 
+                @include mq('tablet', 'max') {
+                    max-width: 50px;
+                    max-height: 100px;
+                }
             }
-
         }
-
     }
+    
+    &.animation-running {
+    
+        svg,
+        img {
+            filter: drop-shadow(0 0 0 $light-gold); 
+            animation: glow 2s ease-in forwards;
+            will-change: filter;
+        }
+    }
+}
 
+@keyframes glow {
+    0%   { filter: drop-shadow(0 0 0 $light-gold); }
+    100% { filter: drop-shadow(0 0 140px $light-gold); }
 }

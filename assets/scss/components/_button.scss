@@ -29,6 +29,10 @@
         letter-spacing: 5.75px;
     }
     
+    @include mq('tablet', 'max') {
+        width: 100%;
+    }
+    
     &.button--filled {
         border: 1px solid $dark-gold;
         background: $dark-gold;

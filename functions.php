@@ -15,6 +15,7 @@ define('GOOGLE_API_KEY', 'AIzaSyDA7Ziy1yief436fbG5v6rMt0cNIcqF2wU');
 include('lib/spring.php');
 include('lib/wordpress.php');
 include('lib/woocommerce.php');
+include('lib/opening-times.php');
 
 //ACF
 add_filter( 'acf/admin/prevent_escaped_html_notice', '__return_true' );
@@ -62,9 +63,16 @@ function custom_enqueue_styles() {
 	wp_enqueue_script('jquery-ui-datepicker');
 	wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?loading=async&key=' . GOOGLE_API_KEY, array('jquery'), THEME_VERSION, true);
 	wp_enqueue_script( 'main', get_bloginfo('template_directory') . '/public/js/main.min.js', array('jquery'), THEME_VERSION, true);
+	
+	
+	// FullCalendar (CDN)
+	wp_enqueue_style('fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css', array('jquery'), '6.1.15');
+	wp_enqueue_script('fullcalendar', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js', array('jquery'), '6.1.15', true);
+  
 	wp_localize_script('main', 'core', [
 	  'home' => home_url(),
-	  'ajax_url' => admin_url( 'admin-ajax.php' )
+	  'ajax_url' => admin_url( 'admin-ajax.php' ),
+	  'nonce' => wp_create_nonce('venuecal_nonce'),
 	]);
 }
 add_action( 'wp_enqueue_scripts', 'custom_enqueue_styles' );
@@ -127,6 +135,12 @@ function create_post_types() {
 			'plural' => 'Announcements', 
 			'slug' => 'our-announcements', 
 			'supports' => array('title', 'editor', 'thumbnail')
+		),
+		'opening_time' => array(
+			'singular' => 'Opening Time', 
+			'plural' => 'Opening Times', 
+			'slug' => 'our-opening-times', 
+			'supports' => array('title')
 		),
 	);
 	

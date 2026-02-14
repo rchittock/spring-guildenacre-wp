@@ -14,7 +14,7 @@
         grid-template-columns: 1fr;
         gap: 64px;
 		
-        @include mq('desktop') {
+        @include mq('tablet') {
             grid-template-columns: 1fr 1fr;
         }
         
@@ -107,15 +107,18 @@
             
             .column-content {
                 
-				@include mq('desktop') {
+				@include mq('tablet') {
 					order: 2;
 				}
             }
             
             .column-media {
                 
+                @include mq('tablet') {
+                    order: 1;
+                }
+                
                 @include mq('desktop') {
-					order: 1;
                     margin-left: -125px;
                 }
             }
@@ -166,15 +169,19 @@
             }
             
             .column-content {
-                @include mq('desktop') {
+                
+                @include mq('tablet') {
 					order: 1;
 				}
             }
             
             .column-media {
                 
+                @include mq('tablet') {
+                    order: 2;
+                }
+                
                 @include mq('desktop') {
-					order: 2;
                     margin-right: -125px;
                 }
             }

@@ -1,39 +1,181 @@
 .panel-animal-stories {
-
-    .heading {
+    text-align: center;
+    
+    .container > .heading {
+        margin-bottom: 170px;
         
+        @include mq('desktop') {
+            margin-bottom: 200px;
+        }   
+    }
+    
+    .slider-container {
+        position: relative
+    }
+    
+    .slick-list {
+        overflow: visible;
     }
 
+    .stories-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto 40px;
+        
+        @include mq('desktop', 'max') {
+            display: none;
+        }   
+        
+        .story-button {
+            opacity: 0.5;
+            
+            &.is-active {
+                opacity: 1;
+                filter: drop-shadow(0 0 10px $light-gold); 
+            }
+            
+            &:nth-child(2) {
+                margin-right: auto;
+            }
+            
+            &:nth-child(3) {
+                margin-left: auto;
+            }
+        }
+        
+        .story-button,    
+        .icon {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+    }
+    
     .stories {
         
         .story {
+            position: relative;
+            color: $dark-green;
+            padding: 160px 34px 84px;
+            background-color: $paper;
             
-            .icon {
+            @include mq('desktop') {
+                padding: 363px 90px 96px;
+            }
+            
+            .media-frame {
+                position: absolute;
+                top: -110px;
+                left: calc(50% - 117.5px);
                 
+                @include mq('desktop') {
+                    top: -170px;
+                    left: calc(50% - 226px);
+                }
+                
+                &,
+                img,
+                video {
+                    border-radius: 50%;
+                    width: 235px;
+                    height: 226px;
+                    
+                    @include mq('desktop') {
+                        width: 452px;
+                        height: 495px;
+                    }   
+                }
             }
 
             .heading {
-                
+                color: $dark-green;
             }
 
             .content {
+                margin-top: 10px;
+                line-height: 28px;
                 
+                @include mq('desktop') {
+                    margin-top: 30px;
+                    font-size: 20px;
+                    line-height: 30px;
+                    letter-spacing: 0.6px;
+                }   
             }
-
-            .image {
-                
-            }
-
-            .video {
-                
-            }
-
-            .star-position {
-                
-            }
-
         }
-
     }
-
+    
+    .slider-buttons {
+        
+        @include mq('desktop', 'max') {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            padding: 0 30px;
+        }
+        
+        .slider-arrow {
+            @include transition();
+            display: inline-block;
+            background: url('../svg/slider-arrow.svg') center center / contain no-repeat;
+            text-indent: -99999px;
+            opacity: 0.5;
+            
+            @include mq('desktop', 'max') {
+                flex: 0 0 44px;
+                width: 44px;
+                height: 36px;
+            }
+            
+            @include mq('desktop') {
+                position: absolute;
+                bottom: calc(50% - 32px);
+                width: 76px;
+                height: 64px;
+            }   
+            
+            &.slider-arrow-prev {
+                transform: rotate(180deg);
+                
+                @include mq('desktop') {
+                    left: -146px;
+                }   
+            }
+            
+            &.slider-arrow-next {
+                
+                @include mq('desktop') {
+                    right: -146px;
+                }   
+            }
+            
+            &:hover {
+                opacity: 1;
+            }
+        }
+        
+        .divider {
+            position: relative;
+            top: 5px;
+            max-width: 193px;
+            
+            @include mq('tablet') {
+                max-width: 250px;
+            } 
+            
+            svg {
+                display: block;
+            }
+            
+            @include mq('desktop') {
+                display: none;
+            }  
+        }
+    }
 }

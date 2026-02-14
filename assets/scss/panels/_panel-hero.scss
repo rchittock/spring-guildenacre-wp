@@ -1,5 +1,6 @@
 .panel-hero {
     position: relative;
+    text-align: center;
     
     @include mq('desktop') {
         padding-bottom: 128px;
@@ -11,6 +12,8 @@
     }
     
     .sub-heading {
+        padding-top: 90px;
+        margin-bottom: 10px;
         
         @include mq('desktop') {
             padding-top: 276px;
@@ -23,6 +26,7 @@
     }
 
     .button {
+        margin-top: 80px;
         
         @include mq('desktop') {
             margin-top: 42px;
@@ -32,6 +36,7 @@
     }
     
     .divider {
+        margin-top: 90px;
         
         @include mq('desktop') {
             margin-top: 42px;
@@ -42,11 +47,17 @@
     &::after {
         position: absolute;
         content: "";
-        top: 129px;
+        width: 77px;
+        height: 86px;
+        top: 0;
         left: 0;
-        width: 292px;
-        height: 328px;
         background: transparent url('../svg/star-1.svg') 0 0 / contain no-repeat;
+        
+        @include mq('desktop') {
+            top: 129px;
+            width: 292px;
+            height: 328px;
+        }
     }
 
     &::after {
@@ -55,7 +66,11 @@
         left: auto;
         width: 199px;
         height: 224px;
-        background-image: url('../svg/star-2.svg')
+        background-image: url('../svg/star-2.svg');
+        
+        @include mq('desktop', 'max') {
+           display: none;
+        }
     }
     
     &.panel-left-star-position-middle {

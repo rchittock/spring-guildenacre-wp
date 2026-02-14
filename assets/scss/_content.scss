@@ -1,6 +1,4 @@
 body {
-	background: #111E1A;
-	
 	@include font_sans();
 	font-size: 16px;
 	line-height: 30px;
@@ -72,6 +70,14 @@ input[type="submit"] {
 	}
 }
 
+.heading-mobile-2 {
+	
+	@include mq('desktop', 'max') {
+		font-size: 40px;
+		line-height: 65px;
+	}
+}
+
 .heading-3 {
 	font-size: 28px;
 	line-height: 42px;
@@ -95,6 +101,11 @@ input[type="submit"] {
 	}
 }
 
+.heading-mobile-4 {
+	font-size: 26px;
+	line-height: 35px;
+}
+
 .heading-5 {
 	font-size: 28px;
 	line-height: 28px;
@@ -103,6 +114,14 @@ input[type="submit"] {
 	@include mq('desktop') {
 		font-size: 25px;
 		line-height: 35px;
+	}
+}
+
+.heading-mobile-5 {
+	
+	@include mq('desktop', 'max') {
+		font-size: 20px;
+		line-height: 25px;
 	}
 }
 
@@ -118,8 +137,13 @@ input[type="submit"] {
 	}
 }
 
-
 img {
 	max-width: 100%;
 }
 
+.content {
+	
+	& > *:not(:last-child) {
+		margin-bottom: 30px;
+	}
+}

@@ -3,6 +3,7 @@
 		$text = get_sub_field( 'text' );
 		$link = get_sub_field( 'link' );
 		$external_link = get_sub_field( 'external_link' );
+		$target = '';
 		if ( $external_link ) :
 			$target = $external_link;
 		else :

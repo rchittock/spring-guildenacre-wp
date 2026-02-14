@@ -1,6 +1,6 @@
 <div class="container">
 
-	<h2 class="heading heading-2 sub-heading">
+	<h2 class="heading heading-2 heading-mobile-2 sub-heading">
 		<?php echo get_sub_field('sub_heading'); ?>
 	</h2>
 

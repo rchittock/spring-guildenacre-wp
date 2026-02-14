@@ -18,6 +18,8 @@
     "gulp-concat": "",
     "gulp-imagemin": "7.1.0",
     "gulp-merge": "",
+    "gulp-notify": "^5.0.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-postcss": "",
     "gulp-rename": "",
     "gulp-sass": "",

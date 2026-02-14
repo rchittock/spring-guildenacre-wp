@@ -1,27 +1,80 @@
 .panel-faqs {
-
-    .heading {
+    
+    .container {
         
-    }
-
-    .button {
-        
-    }
-
-    .faqs {
-        
-        .faq {
+        .heading {
             
-            .heading {
-                
-            }
-
-            .content {
-                
-            }
-
         }
-
+        
+        .button {
+            
+        }
     }
 
+    details.accordion,
+    details.accordion * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    details > summary {
+        list-style: none;
+    }
+    
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+    
+    .accordions {
+        
+        .accordion {
+            
+            .accordion-heading {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 30px;
+                cursor: pointer;
+                padding-bottom: 30px;
+                margin-bottom: 30px;
+                border-bottom: 1px solid $light-gold;
+                color: $off-white;
+                
+                span {
+                    display: inline-block;
+                }
+                
+                .arrow {
+                    @include transition();
+                    transform: rotate(0deg);
+                    
+                    &,
+                    svg {
+                        width: 42px;
+                        height: 36px;
+                    }
+                }
+            }
+            
+            .expander {
+                margin-bottom: 30px;
+            }
+            
+            &[open] {
+                
+                .accordion-heading {
+                    .arrow {
+                        transform: rotate(90deg);
+                    }
+                }
+            }	
+        }
+    }
+
+    .divider {
+        margin-top: 75px; 
+        
+        @include mq('desktop', 'max') {
+            display: none;
+        }
+    }
 }

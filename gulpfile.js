@@ -1,11 +1,12 @@
 //Utils
 const gulp = require("gulp");
 const { src, dest, parallel } = require('gulp');
-const merge = require('gulp-merge');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const browserSync = require('browser-sync').create();
+const plumber = require("gulp-plumber");
+const notify  = require("gulp-notify");
 
 //CSS
 const sass = require('gulp-sass')(require('sass'));
@@ -17,32 +18,42 @@ const autoprefixer = require('autoprefixer');
 const imagemin = require('gulp-imagemin');
 
 function styles() {
-	return merge(
-		gulp.src([
-			'node_modules/glightbox/dist/css/glightbox.min.css',
-			//'assets/scss/jquery-ui.css',
-			//'assets/scss/jquery.bxslider.css',
-			'assets/scss/slick.css',
-			'assets/scss/slick-theme.css',
-			'assets/scss/main.scss'
-		]).pipe(sass({outputStyle: 'compressed'})).pipe(postcss([ autoprefixer() ]))
-	)
+	return gulp.src([
+		'node_modules/glightbox/dist/css/glightbox.min.css',
+		'assets/scss/slick.css',
+		'assets/scss/slick-theme.css',
+		'assets/scss/main.scss'
+	])
+	.pipe(plumber({
+		errorHandler: notify.onError({
+			title: "CSS/Sass error",
+			message: "<%= error.message %>"
+		})
+	}))
 	.pipe(sourcemaps.init())
-	.pipe(sourcemaps.write('.'))
+	.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+	.pipe(postcss([autoprefixer()]))
 	.pipe(concat('main.css'))
-	.pipe(rename({suffix: '.min'}))
+	.pipe(rename({ suffix: '.min' }))
+	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest('./public/css'))
 	.pipe(browserSync.stream());
 }
 
 function editor_styles() {
-	return merge(
-		gulp.src('assets/scss/editor-styles.css').pipe(sass({outputStyle: 'compressed'})).pipe(postcss([ autoprefixer() ]))
-	)
+	return gulp.src('assets/scss/editor-styles.css')
+		.pipe(plumber({
+		errorHandler: notify.onError({
+			title: "Editor CSS error",
+			message: "<%= error.message %>"
+		})
+	}))
 	.pipe(sourcemaps.init())
-	.pipe(sourcemaps.write('.'))
+	.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+	.pipe(postcss([autoprefixer()]))
 	.pipe(concat('editor-styles.css'))
-	.pipe(rename({suffix: '.min'}))
+	.pipe(rename({ suffix: '.min' }))
+	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest('./public/css'))
 	.pipe(browserSync.stream());
 }
@@ -66,42 +77,28 @@ function scripts() {
 }
 
 function svg() {
-	return gulp.src('assets/svg/**/*')
-	  //.pipe(imagemin())
-	  .pipe(gulp.dest('public/svg'));
+	return gulp.src('assets/svg/**/*', { base: 'assets/svg' })
+	.pipe(gulp.dest('public/svg'));
 }
 
 function images() {
-	return gulp.src('assets/images/**/*')
-		//.pipe(imagemin())
-		.pipe(gulp.dest('public/images'))
-		/*
-		.pipe(imagemin([
-			imagemin.gifsicle({interlaced: true}),
-			imagemin.mozjpeg({progressive: true}),
-			imagemin.optipng({optimizationLevel: 5}),
-			imagemin.svgo({plugins: [{removeViewBox: true}]})
-		]))
-		*/
+	return gulp.src('assets/images/**/*', { base: 'assets/images' })
+	.pipe(gulp.dest('public/images'));
 }
 
 function fonts() {
-	return gulp.src('assets/fonts/**/*')
-	  .pipe(imagemin())
-	  .pipe(gulp.dest('public/fonts'))
+	return gulp.src('assets/fonts/**/*', { base: 'assets/fonts' })
+	.pipe(gulp.dest('public/fonts'));
 }
 
 function watchFiles() {
+	browserSync.init({ proxy: "localhost/guildenacre/" });
 	
-	browserSync.init({
-		proxy: "localhost/guildenacre/"
-	});
-	
-	gulp.watch('assets/scss/**/*.scss', gulp.series('styles'));
-	gulp.watch('assets/scss/editor-styles.css', gulp.series('editor_styles'));
-	gulp.watch('assets/js/**/*.js', gulp.series('scripts'));
-	gulp.watch('assets/svg/**/*.svg', gulp.series('svg'));
-	gulp.watch('assets/images/**/*.**', gulp.series('images'));
+	gulp.watch('assets/scss/**/*.scss', styles);
+	gulp.watch('assets/scss/editor-styles.css', editor_styles);
+	gulp.watch('assets/js/**/*.js', scripts);
+	gulp.watch('assets/svg/**/*.svg', svg);
+	gulp.watch('assets/images/**/*', images);
 }
 
 const watch = gulp.parallel(watchFiles)
