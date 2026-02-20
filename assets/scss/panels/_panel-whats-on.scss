@@ -1,19 +1,86 @@
 .panel-whats-on {
-
-    .heading {
+    
+    .panel-header {    
+        margin-bottom: 70px;
         
+        @include mq('desktop') {
+            margin-bottom: 126px;
+        }
+        
+        .heading {
+            
+            @include mq('desktop', 'max') {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+        }
+    }
+    
+    .filters {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        align-items: center;
+        flex-wrap: wrap;
+        
+        @include mq('desktop') {
+            flex-direction: row;
+            justify-content: flex-end;
+            flex-wrap: nowrap;
+            gap: 25px;
+        }
+        
+        .filter {
+            @include font_decorative();
+            font-size: 18px;
+            line-height: 39px;
+            letter-spacing: 4.5px;
+            appearance: none;
+            background: transparent url('../svg/filter-arrow.svg') center right 40px / 30px 29px no-repeat;
+            display: inline-block;
+            border-radius: 124.5px;
+            border: 1px solid $light-gold;
+            padding: 13px 100px 13px 35px;
+            color: $light-gold;
+            width: 100%;
+            
+            @include mq('tablet', 'max') {
+                flex: 0 0 100%;
+                width: 100%;
+            }
+            
+            @include mq('desktop') {
+                min-width: 300px;  
+            }  
+            
+            &.filter-activity-type {
+                
+                @include mq('desktop') {
+                    min-width: 350px;  
+                }  
+            }
+        }
     }
 
-    .show-activity-type {
+    .filter-results {
+        display: grid;
         
-    }
-
-    .show-age-range {
+        @include mq('tablet') {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 30px;
+        }
         
-    }
-
-    .show-date-range {
+        @include mq('desktop') {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0 88px;
+        }
         
+        .event-card {
+            margin-bottom: 74px;
+            
+            @include mq('desktop') {
+                margin-bottom: 100px;
+            }
+        }
     }
-
 }

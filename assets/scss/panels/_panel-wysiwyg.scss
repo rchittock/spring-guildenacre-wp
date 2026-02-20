@@ -1,0 +1,114 @@
+.panel-wysiwyg {
+    position: relative;
+    text-align: center;
+    
+    .sub-heading,
+    .heading {
+        color: $light-gold
+    }
+    
+    .heading,
+    .sub-heading,
+    .content {
+        text-shadow: 0 0 105px $light-gold;
+    }
+    
+    .sub-heading {
+        padding-top: 90px;
+        margin-bottom: 10px;
+        
+        @include mq('desktop') {
+            padding-top: 170px;
+        }
+    }
+
+    .heading {
+    }
+    
+    .content {
+        max-width: 1058px;
+        margin-top: 50px;
+        margin-inline: auto;
+        @include font_decorative();
+        font-size: 20px;
+        line-height: 22px;
+        letter-spacing: 2.5px;
+        
+        @include mq('desktop') {
+            margin-top: 65px;
+            font-size: 25px;
+            line-height: 35px;
+            letter-spacing: 5px;
+        }
+    }
+
+    .button {
+        margin-top: 80px;
+        
+        @include mq('desktop') {
+            margin-top: 42px;
+            margin-bottom: 188px;
+        }
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        content: "";
+        width: 77px;
+        height: 86px;
+        top: 0;
+        left: 0;
+        background: transparent url('../svg/star-1.svg') 0 0 / contain no-repeat;
+        
+        @include mq('desktop') {
+            top: 129px;
+            width: 292px;
+            height: 328px;
+        }
+    }
+
+    &::after {
+        top: 37px;
+        right: 96px;
+        left: auto;
+        width: 199px;
+        height: 224px;
+        background-image: url('../svg/star-2.svg');
+        
+        @include mq('desktop', 'max') {
+           display: none;
+        }
+    }
+    
+    &.panel-left-star-position-middle {
+        &::before {
+            top: calc(50% - 164px);
+            bottom: auto;
+        }
+    }
+    
+    &.panel-left-star-position-bottom {
+        &::before {
+            top: auto;
+            bottom: 0;
+        }
+    }
+    
+    &.panel-right-star-position-middle {
+        &::after {
+            top: calc(50% - 112px);
+            bottom: auto;
+        }
+    }
+    
+    &.panel-right-star-position-bottom {
+        &::after {
+            top: auto;
+            bottom: 0;
+            right: -10px;
+            width: 353px;
+            height: 397px;
+        }
+    }
+}

@@ -58,16 +58,20 @@ function custom_enqueue_styles() {
 
 	//CSS
 	wp_enqueue_style( 'main', get_bloginfo('template_directory') . '/public/css/main.min.css', array(), THEME_VERSION);
+	wp_enqueue_style( 'daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), THEME_VERSION);
 	
 	//JS
 	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?loading=async&key=' . GOOGLE_API_KEY, array('jquery'), THEME_VERSION, true);
-	wp_enqueue_script( 'main', get_bloginfo('template_directory') . '/public/js/main.min.js', array('jquery'), THEME_VERSION, true);
 	
+	wp_enqueue_script( 'moment', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js', array('jquery'), THEME_VERSION, true);
+	wp_enqueue_script( 'daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array('jquery'), THEME_VERSION, true);
+	wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?loading=async&key=' . GOOGLE_API_KEY, array('jquery'), THEME_VERSION, true);
 	
 	// FullCalendar (CDN)
 	wp_enqueue_style('fullcalendar-css', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css', array('jquery'), '6.1.15');
 	wp_enqueue_script('fullcalendar', 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js', array('jquery'), '6.1.15', true);
+  
+  	wp_enqueue_script( 'main', get_bloginfo('template_directory') . '/public/js/main.min.js', array('jquery'), THEME_VERSION, true);
   
 	wp_localize_script('main', 'core', [
 	  'home' => home_url(),
@@ -516,3 +520,152 @@ function show_posts_on_archive_page( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'show_posts_on_archive_page' );
+
+
+/* Events */
+
+// Events
+
+function event_search() {
+	
+	$activity_types = isset($_POST['activity_type']) ? sanitize_text_field($_POST['activity_type']) : array();
+	$age_ranges = isset($_POST['age_range']) ? sanitize_text_field($_POST['age_range']) : array();
+		
+	$start_date = isset($_POST['start_date']) ? sanitize_text_field($_POST['start_date']) : '';
+	$end_date   = isset($_POST['end_date']) ? sanitize_text_field($_POST['end_date']) : '';
+	
+	// Set up base query
+	$args = array(
+		'post_type' => array('event'),
+		'posts_per_page' => -1,
+		'orderby' => 'meta_value',
+		'meta_key' => 'start_date',
+		'order' => 'ASC',
+		'meta_query' => array(),
+	);
+	
+	$tax_query = array( 'relation' => 'AND' );
+	
+	// Filter by activity types
+	if ( ! empty( $activity_types ) ) {
+		$tax_query[] = array(
+			'taxonomy' => 'event-activity-type',
+			'field'    => 'term_id',   // or 'id' is also accepted; term_id is clearer
+			'terms'    => $activity_types,
+		);
+	}
+	
+	// Filter by age range
+	if ( ! empty( $age_ranges ) ) {
+		$tax_query[] = array(
+			'taxonomy' => 'event-age-range',
+			'field'    => 'term_id',
+			'terms'    => $age_ranges,
+		);
+	}
+	
+	// Only set if we actually added clauses (more than just 'relation')
+	if ( count( $tax_query ) > 1 ) {
+		$args['tax_query'] = $tax_query;
+	}
+	
+	// Filter events that overlap the selected range
+	if ( $start_date || $end_date ) {
+	
+		$args['meta_query'] = array( 'relation' => 'AND' );
+	
+		// Only START selected: treat it as a single day to be "inside" the event span
+		if ( $start_date && ! $end_date ) {
+			$d = $start_date->format('Y-m-d');
+	
+			$args['meta_query'][] = array(
+				'key'     => 'start_date',
+				'value'   => $d,
+				'compare' => '<=',
+				'type'    => 'DATE',
+			);
+	
+			$args['meta_query'][] = array(
+				'key'     => 'end_date',
+				'value'   => $d,
+				'compare' => '>=',
+				'type'    => 'DATE',
+			);
+		}
+	
+		// Only END selected: same idea, date must be inside the event span
+		elseif ( $end_date && ! $start_date ) {
+			$d = $end_date->format('Y-m-d');
+	
+			$args['meta_query'][] = array(
+				'key'     => 'start_date',
+				'value'   => $d,
+				'compare' => '<=',
+				'type'    => 'DATE',
+			);
+	
+			$args['meta_query'][] = array(
+				'key'     => 'end_date',
+				'value'   => $d,
+				'compare' => '>=',
+				'type'    => 'DATE',
+			);
+		}
+	
+		// Both selected: overlap range (correct as you had it)
+		else {
+			$range_start = $start_date->format('Y-m-d');
+			$range_end   = $end_date->format('Y-m-d');
+	
+			$args['meta_query'][] = array(
+				'key'     => 'end_date',
+				'value'   => $range_start,
+				'compare' => '>=',
+				'type'    => 'DATE',
+			);
+	
+			$args['meta_query'][] = array(
+				'key'     => 'start_date',
+				'value'   => $range_end,
+				'compare' => '<=',
+				'type'    => 'DATE',
+			);
+		}
+	}
+
+	
+	print_pre($args);
+	
+	$event = new WP_Query($args);
+	$event_counter = 1;
+	if ( $event->have_posts() ) { 
+		while ( $event->have_posts() ) { $event->the_post();
+			include('includes/panels/components/event-card.php');
+			$event_counter++;
+		}
+	} else {
+		if ( $offset == 0 ) {
+			include('includes/panels/components/no-results.php');
+		}
+	}
+	
+	wp_die();
+}
+add_action( 'wp_ajax_event_search', 'event_search' );
+add_action( 'wp_ajax_nopriv_event_search', 'event_search' );
+
+function get_date_string($start_date, $end_date, $custom_date_text, $date_format = 'j F Y') {
+	
+	$date_string = '';
+	
+	if ( $custom_date_text != '' ) :
+		$date_string = $custom_date_text;
+	else : 
+		$date_string = $start_date->format($date_format);
+		if ( $start_date->format($date_format) != $end_date->format($date_format) ) :
+			$date_string .= ' - ' . $end_date->format($date_format);
+		endif;
+	endif;
+	
+	return $date_string;	
+}

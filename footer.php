@@ -1,7 +1,7 @@
 
 <?php $footer_map = get_field( 'footer_map', 'option' ); ?>
 <?php if ( $footer_map ) : ?>
-	<aside class="panel panel-map">
+	<aside class="footer-map">
 		<img src="<?php echo esc_url( $footer_map['url'] ); ?>" 
 			 alt="<?php echo esc_attr( $footer_map['alt'] ); ?>" 
 			 loading="lazy" />
@@ -52,6 +52,10 @@
 			
 			<div class="column column-form">
 								
+				<div class="divider">
+					<?php load_svg('footer-divider'); ?>
+				</div>
+				
 				<p class="heading"><?php the_field( 'mailing_list_heading', 'option' ); ?></p>
 
 				<!-- Form -->

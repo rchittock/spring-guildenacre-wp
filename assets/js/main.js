@@ -4,23 +4,23 @@ jQuery(document).ready(function ($) {
 	var desktopSize = 1280;
 
 	function isMobile() {
-		return $(window).outerWidth() < tabletSize;
+		return $(window).width() < tabletSize;
 	}
 	
 	function isTablet() {
-		return $(window).outerWidth() >= tabletSize && $(window).outerWidth() < desktopSize;
+		return $(window).width() >= tabletSize && $(window).width() < desktopSize;
 	}
 	
 	function isDesktop() {
-		return $(window).outerWidth() >= desktopSize;
+		return $(window).width() >= desktopSize;
 	}
 	
 	function isTabletDesktop() {
-		return $(window).outerWidth() >= tabletSize;
+		return $(window).width() >= tabletSize;
 	}
 	
 	function isMobileTablet() {
-		return $(window).outerWidth() < desktopSize;
+		return $(window).width() < desktopSize;
 	}
 	
 	/* Scroll Animations */
@@ -98,6 +98,123 @@ jQuery(document).ready(function ($) {
 		adaptiveHeight: false,
 		infinite: true
 	});
+	
+	
+	/* What's on Event Filters */
+	
+	var start = moment().subtract(29, 'days');
+	var end = moment();
+	
+	function cb(start, end) {
+		$('#event-dates span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+	}
+	
+	$('#event-dates').daterangepicker({
+		startDate: start,
+		endDate: end,
+		opens: 'left'
+	}, cb);
+	
+	cb(start, end);
+	
+	$('#event-dates').on('apply.daterangepicker', function(ev, picker) {
+		console.log('apply.daterangepicker');
+		$('#date_selected').val('true');
+		search_events();
+	});
+	
+	$('#event-dates').on('cancel.daterangepicker', function(ev, picker) {
+		console.log('cancel.daterangepicker');
+		$('#date_selected').val('false');
+		search_events();
+	});
+	
+	$('.filter-activity-type').change(function(e) {
+		e.preventDefault();
+		$(this).parent().toggleClass('active');
+		search_events();
+	});
+	
+	$('.filter-age-range').change(function(e) {
+		e.preventDefault();
+		search_events();
+	});
+	
+	$('.clear-dates .btn').click(function(e) {
+		e.preventDefault();
+		$("#event-start-date").val('');
+		$("#event-end-date").val('');
+		search_events();
+	});
+	
+	function search_events() {
+		
+		var daterangepicker = $('#event-dates').data('daterangepicker');		
+		console.log(daterangepicker);
+		
+		var date_selected = $('#date_selected').val() == 'true';
+		
+		var start_date = ( date_selected && daterangepicker !== undefined) ? daterangepicker.startDate.format('YYYY-MM-DD') : '';
+		var end_date = ( date_selected && daterangepicker !== undefined) ? daterangepicker.endDate.format('YYYY-MM-DD') : '';
+		
+		let activity_type = [];		
+		const activity_type_value = $('.filter-activity-type').val();
+		if (activity_type_value != 'Activity Type' ) {
+			activity_type = [activity_type_value];
+		} else {
+			activity_type = $('.filter-activity-type:checked').map(function() {
+				return this.value;
+			}).get();
+		}
+		
+		let age_range = [];		
+		const age_range_value = $('.filter-age-range').val();
+		if (age_range_value != 'Age Range' ) {
+			age_range = [age_range_value];
+		} else {
+			age_range = $('.filter-age-range:checked').map(function() {
+				return this.value;
+			}).get();
+		}
+		
+		var results = '';
+		
+		$('.filter-results').addClass('loading');
+		
+		jQuery.post(
+			core.ajax_url, 
+			{
+				'action': 'event_search',
+				'start_date': start_date,
+				'end_date': end_date,
+				'activity_type': activity_type,
+				'age_range': age_range
+			}, 
+			function(response) {
+				results = response;
+				
+				$('.filter-results').removeClass('loading');
+				$('.filter-results').html(results);
+			}
+		);	
+	}
+	
+	
+	/* Gallery */
+	
+	if ( isMobileTablet() ) {
+		$('.images-grid').slick({
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			arrows: false,
+			dots: false,
+			centerMode: true,
+			slidesToShow: 1,
+			centerPadding: '12.5%', // (100% - 75%) / 2
+			infinite: true
+		});
+	}
+	
 	
 	/* Tabbed Content */
 	

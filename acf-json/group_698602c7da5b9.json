@@ -17,7 +17,7 @@
                 "id": ""
             },
             "display_format": "d\/m\/Y g:i a",
-            "return_format": "d\/m\/Y g:i a",
+            "return_format": "Y-m-d H:i:s",
             "first_day": 1,
             "default_to_current_date": 0,
             "allow_in_bindings": 0
@@ -37,7 +37,7 @@
                 "id": ""
             },
             "display_format": "d\/m\/Y g:i a",
-            "return_format": "d\/m\/Y g:i a",
+            "return_format": "Y-m-d H:i:s",
             "first_day": 1,
             "default_to_current_date": 0,
             "allow_in_bindings": 0
@@ -150,5 +150,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1770390642
+    "modified": 1771244291
 }

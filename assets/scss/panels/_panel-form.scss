@@ -1,11 +1,167 @@
 .panel-form {
 
-    .heading {
+    .form-frame {
         
+        @include mq('desktop') {
+            padding: 66px 100px;
+            border: 1px solid $light-gold;
+        }
     }
 
-    .form {
+    .heading {
+        text-align: center;
+        margin-bottom: 60px;
         
+        font-size: 50px;
+        line-height: 65px;
+        
+        @include mq('tablet', 'max') {
+            margin-inline: 30px;   
+        }
+    }
+
+    .nf-form-cont {
+        
+        .nf-form-fields-required {
+            display: none;
+        }
+        
+        .nf-error-msg, 
+        .ninja-forms-req-symbol {
+            color: $light-gold;
+        }
+        
+        .nf-field-element {
+            input, 
+            select, 
+            textarea {
+                background: url('../images/form-field.png') center center / 100% 100% no-repeat;
+                border: none;
+                min-height: 63px;
+                padding: 0 26px;
+                font-size: 16px;
+                line-height: 30px;
+                letter-spacing: 1px;
+                color: $green;
+                
+                @include mq('tablet', 'max') {
+                    text-align: center;
+                }
+                
+                @include mq('desktop') {
+                    font-size: 18px;
+                    line-height: 35px;
+                    min-height: 44px;
+                    font-size: 16px;
+                }
+                
+                &:focus-visible {
+                    outline: none;
+                }
+                
+                @include placeholder() {
+                    opacity: 1;
+                    color: $green;
+                }
+            }   
+            
+            textarea {
+                background-image: url('../images/form-textarea.png');
+                padding-block: 26px;
+                
+                @include mq('desktop') {
+                    padding-block: 12px;
+                }
+            }
+            
+            button, 
+            input[type="button"], 
+            input[type="submit"] {
+                font-size: 18px;
+                line-height: 39px;
+                min-height: 65px;   
+                letter-spacing: 4.5px;
+                
+                @include mq('desktop') {
+                    font-size: 14px;
+                    letter-spacing: 3.5px;
+                }
+            }
+        }
+        
+        .list-select-wrap {
+            
+            .nf-field-element {
+                position: relative;
+                
+                select {
+                    appearance: none;
+                }
+                
+                &::after {
+                    content: "";
+                    position: absolute;
+                    z-index: 10;
+                    display: inline-block;
+                    top: calc(50% - 15px);
+                    right: 20px;
+                    width: 30px;
+                    height: 29px;
+                    background: transparent url('../svg/filter-arrow.svg') center center / contain no-repeat;
+                }
+            }
+            
+        }
+        
+        .submit-wrap {
+            
+            .nf-field-element {
+                text-align: right;
+            }
+        }
+        
+        .nf-error-msg,
+        .html-container {
+            font-size: 14px;
+            line-height: 35px;
+            letter-spacing: 1px;
+            color: $light-gold;
+        }
+        
+        .nf-row:last-child {
+            
+            @include mq('desktop') {
+                display: grid;
+            }
+            
+            .html-container,
+            .submit-container {
+                
+                @include mq('desktop') {
+                    margin-bottom: 0;
+                }
+                
+                .nf-field-element {
+                    
+                    @include mq('desktop') {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            
+            .nf-cell {
+                
+                @include mq('desktop') {
+                    height: 100%;
+                    display: grid;
+                    align-items: center;
+                }
+            }
+        }
+        
+        .nf-after-form-content {
+            margin-top: 30px;
+        }
     }
 
 }

@@ -24,14 +24,11 @@ a {
 }
 
 small {
-	display: inline-block; //to accept line-height
+	display: inline-block; // to accept line-height
 	text-shadow: 0 0 105px $light-gold;
-	
-	@include mq('desktop') {
-		font-size: 12px;
-		line-height: 18px;
-		letter-spacing: 0;
-	}
+	font-size: 12px;
+	line-height: 18px;
+	letter-spacing: 0;
 }
 
 button,

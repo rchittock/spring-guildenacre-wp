@@ -22,7 +22,7 @@
 		
 		<div class="column column-media">
 	
-			<div class="frame">
+			<div class="media-frame">
 				<?php include('components/image.php'); ?>
 				<?php //include('components/video.php'); ?>
 			</div>

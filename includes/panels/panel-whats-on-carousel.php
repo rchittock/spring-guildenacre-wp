@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-wide">
 
 	<div class="panel-header">
 		<h2 class="heading heading-2">

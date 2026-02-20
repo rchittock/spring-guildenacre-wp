@@ -2,7 +2,12 @@
  * Component: Button
  */
 
-.button {
+.button,
+.panel-form .nf-form-cont .nf-field-element button, 
+.panel-form .nf-form-cont .nf-field-element input[type="button"], 
+.panel-form .nf-form-cont .nf-field-element input[type="submit"] {
+    background-color: transparent;
+    background-image: none;
     display: inline-flex;
     //max-height: 65px;
     min-height: 72px;

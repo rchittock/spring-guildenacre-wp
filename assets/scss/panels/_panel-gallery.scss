@@ -1,11 +1,53 @@
 .panel-gallery {
-
-    .images-wrapper {
+    
+    .container {
         
-        .image {
-            
+        @include mq('desktop', 'max') {
+            padding-inline: 0;
+            max-width: none;
         }
-
     }
 
+    .images-grid {
+        
+        .slider {
+            width: 100%;
+        }
+        
+        .slick-slide {
+            margin: 0 15px; /* 15px + 15px = 30px gap */
+            
+            @include mq('tablet') {
+                margin: 0 20px;
+            }
+        }
+        
+        .slick-list {
+            margin: 0 -15px; /* counteract outer margins */
+            
+            @include mq('tablet') {
+                margin: 0 -20px;
+            }
+        }
+        
+        @include mq('desktop') {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px 50px;   
+        }
+        
+        .frame {
+            aspect-ratio: 252 / 204;
+            
+            @include mq('tablet') {
+                aspect-ratio: 305 / 246;
+            }
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
 }
