@@ -1,9 +1,14 @@
 .panel-code-embed {
-    text-align: center;
-    
-    .frame-border {
+        
+	/* Beyonk */
+
+    booking-form {
+		text-align: center;
+		padding: 20px;
+		display: block;
+		max-width: 800px;
+		margin: 0 auto;
         border: 1px solid $light-gold;
-        padding: 20px;
         
         @include mq('desktop') {
             padding: 66px 100px;

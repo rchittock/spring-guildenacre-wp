@@ -36,7 +36,7 @@ function hide_acf_for_non_admin_user() {
 add_action('admin_menu', 'hide_acf_for_non_admin_user');
 
 //Support
-add_theme_support( 'post-thumbnails', [ 'post', 'event', 'announcement' ] );	
+add_theme_support( 'post-thumbnails', [ 'post', 'event', 'announcement', 'product' ] );	
 add_post_type_support( 'page', 'excerpt' );
 
 //Menus
@@ -352,6 +352,13 @@ function load_svg($name) {
 	$svg = file_get_contents($file);
 	$svg = clean_up_svg($svg);
 	echo $svg;
+}
+
+function get_svg($name) {
+	$file = get_template_directory() . '/public/svg/'.$name.'.svg';
+	$svg = file_get_contents($file);
+	$svg = clean_up_svg($svg);
+	return $svg;
 }
 
 function clean_up_svg($svg) {

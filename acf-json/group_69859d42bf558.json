@@ -1789,10 +1789,35 @@
                             },
                             "choices": {
                                 "1": "1",
-                                "2": "2",
-                                "full": "Full Width"
+                                "2": "2"
                             },
                             "default_value": 1,
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "horizontal",
+                            "save_other_choice": 0
+                        },
+                        {
+                            "key": "field_69980a44be650",
+                            "label": "Display",
+                            "name": "display",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "inline": "Inline",
+                                "full-width": "Full Width"
+                            },
+                            "default_value": "inline",
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
@@ -2045,15 +2070,59 @@
                                             "mime_types": "",
                                             "allow_in_bindings": 0,
                                             "preview_size": "medium"
+                                        },
+                                        {
+                                            "key": "field_6998025fd50b6",
+                                            "label": "Style",
+                                            "name": "",
+                                            "aria-label": "",
+                                            "type": "tab",
+                                            "instructions": "",
+                                            "required": 0,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "placement": "top",
+                                            "endpoint": 0,
+                                            "selected": 0
+                                        },
+                                        {
+                                            "key": "field_69980266d50b7",
+                                            "label": "Box Width",
+                                            "name": "box_width",
+                                            "aria-label": "",
+                                            "type": "radio",
+                                            "instructions": "",
+                                            "required": 0,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "choices": {
+                                                "half": "Half",
+                                                "full": "Full"
+                                            },
+                                            "default_value": "half",
+                                            "return_format": "value",
+                                            "allow_null": 0,
+                                            "other_choice": 0,
+                                            "allow_in_bindings": 0,
+                                            "layout": "horizontal",
+                                            "save_other_choice": 0
                                         }
                                     ],
                                     "min": "",
                                     "max": ""
                                 }
                             },
-                            "min": "",
+                            "min": 1,
                             "max": "",
-                            "button_label": "Add Row"
+                            "button_label": "Add Box"
                         },
                         {
                             "key": "field_6985a8ad83824",
@@ -3355,14 +3424,14 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "product"
+                "value": "global_panels"
             }
         ],
         [
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "global_panels"
+                "value": "product"
             }
         ]
     ],
@@ -3371,12 +3440,10 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": [
-        "the_content"
-    ],
+    "hide_on_screen": "",
     "active": true,
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1771229791
+    "modified": 1771581149
 }

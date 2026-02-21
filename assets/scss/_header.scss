@@ -1,5 +1,10 @@
 .header {
 	
+	@include mq('desktop') {
+		padding-top: 70px;
+		padding-bottom: 37px;
+	}
+	
 	.container {
 		position: relative;
 		display: flex;
@@ -10,6 +15,7 @@
 		
 		@include mq('desktop') {
 			padding-inline: 148px;
+			min-height: 172px;
 		}
 	}
 	

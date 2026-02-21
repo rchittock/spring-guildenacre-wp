@@ -5,11 +5,16 @@
 .button,
 .panel-form .nf-form-cont .nf-field-element button, 
 .panel-form .nf-form-cont .nf-field-element input[type="button"], 
-.panel-form .nf-form-cont .nf-field-element input[type="submit"] {
+.panel-form .nf-form-cont .nf-field-element input[type="submit"],
+
+.woocommerce div.product form.cart .button,
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) a.button, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) button.button, 
+.woocommerce:where(body:not(.woocommerce-block-theme-has-button-styles)) input.button,
+:where(body:not(.woocommerce-block-theme-has-button-styles)):where(:not(.edit-post-visual-editor)) .woocommerce a.button {
     background-color: transparent;
     background-image: none;
     display: inline-flex;
-    //max-height: 65px;
     min-height: 72px;
     padding: 13px 35px;
     justify-content: center;
@@ -37,6 +42,12 @@
     @include mq('tablet', 'max') {
         width: 100%;
     }
+	
+	&:hover {
+		background-color: transparent;
+		color: $light-gold;
+		opacity: 1;
+	}
     
     &.button--filled {
         border: 1px solid $dark-gold;

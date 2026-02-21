@@ -1,17 +1,18 @@
 <?php 
 $column_class = get_sub_field('columns');
+$display_class = get_sub_field('display');
 $box_count = count(get_sub_field('boxes'));
-$box_even = $box_count % 2 == 0 ? 'even' : 'odd';
 ?>
 
 <div class="container container-wide">
 
 	<?php if( have_rows('boxes') ): ?>
-		<div class="boxes boxes-<?php echo $box_count; ?> boxes-<?php echo $box_even; ?> box-columns-<?php echo $column_class; ?>">
+		<div class="boxes boxes-<?php echo $box_count; ?> boxes-<?php echo $display_class; ?> box-columns-<?php echo $column_class; ?>">
 			<?php while( have_rows('boxes') ): the_row(); ?>
 		        <?php if( get_row_layout() == 'box' ): 
+					$box_width = get_sub_field('box_width');
 					$overlay_class = ( get_sub_field('heading') != '' || get_sub_field('content') != '' ) ? 'overlay' : 'no-overlay'; ?>
-		            <div class="box box-<?php echo $overlay_class; ?>">
+		            <div class="box box-width-<?php echo $box_width; ?> box-<?php echo $overlay_class; ?>">
 						
 						<div class="frame">
 							<?php include('components/image.php'); ?>

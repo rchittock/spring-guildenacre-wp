@@ -1,15 +1,124 @@
 .panel-whats-on-carousel {
 
-    .heading {
-        
-    }
+	.heading {}
 
-    .button {
-        
-    }
+	.button {}
+	
+	.carousel-container {
+		position: relative;
+		overflow: hidden;
+		
+		&::before,
+		&::after {
+			
+			@include mq('desktop') {
+				content: '';
+				position: absolute;
+				top: 0;
+				width: 300px;
+				height: 100%;
+				pointer-events: none;
+				z-index: 2;
+			}
+		}
+		
+		&::before {
+			
+			@include mq('desktop') {
+				left: 0;
+				background: linear-gradient(to right, $green 20%, rgba(14, 27, 22, 0) 100%);
+			}
+		}
+		
+		&::after {
+			
+			@include mq('desktop') {
+				right: 0;
+				background: linear-gradient(to left, $green 20%, rgba(14, 27, 22, 0) 100%);
+			}
+		}
+	}
 
-    .events {
-        
-    }
+	.carousel {
+		
+		.slick-slide {
+			margin: 0 50px;
+			position: relative;
+			
+			@include mq('desktop') {
+				opacity: 0.7;
+				transition: transform 0.3s ease, opacity 0.3s ease;
+				transform-origin: center;
+				transform: scale(0.8);
+			}
+			
+			&:has(+ .slick-center) {
+				
+				@include mq('desktop') {
+					left: 50px;
+				}
+			}
+			
+			&.slick-center + .slick-slide {
+				
+				@include mq('desktop') {
+					right: 50px;
+				}
+			}
+		}
+
+		.slick-list {
+			margin: 0 -50px;
+			overflow: visible;
+		}
+		
+		.slick-center {
+			
+			@include mq('desktop') {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+	}
+
+	.slider-buttons {
+
+		.slider-arrow {
+			z-index: 10;
+
+			&.slider-arrow-prev {
+
+				@include mq('desktop') {
+					left: 0;
+				}
+			}
+
+			&.slider-arrow-next {
+
+				@include mq('desktop') {
+					right: 0;
+				}
+			}
+		}
+	}
+
+	.carousel {
+
+		.event-card {
+
+			&,
+			.heading {
+				color: $off-white;
+			}
+
+			svg path {
+				stroke: $off-white;
+			}
+
+			.inner {
+				background: transparent url("../images/carousel-card.png") bottom center / 100% 100% no-repeat;
+			}
+		}
+	}
 
 }

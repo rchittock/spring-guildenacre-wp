@@ -38,9 +38,9 @@
                 flex: 0 0 195px;
             }
             
-            img {
-                display: inline-block;
-                width: auto;
+            picture {
+                display: grid;
+				place-items: center;
                 height: 41px;
                 
                 @include mq('tablet') {
@@ -51,7 +51,6 @@
             .heading {
                 display: block;
                 color: $light-gold;
-                text-shadow: 0 0 50px $light-gold;
                 max-width: 100px;
                 margin-top: 16px;
                 
@@ -78,6 +77,10 @@
             
             &:hover {
                 opacity: 1;
+				
+				.heading {
+					text-shadow: 0 0 50px $light-gold;
+				}
             }
         }
     }

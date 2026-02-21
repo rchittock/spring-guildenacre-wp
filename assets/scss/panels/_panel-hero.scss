@@ -3,7 +3,7 @@
     text-align: center;
     
     @include mq('desktop') {
-        padding-bottom: 128px;
+        margin-bottom: 172px;
     }
     
     .sub-heading,
@@ -16,7 +16,7 @@
         margin-bottom: 10px;
         
         @include mq('desktop') {
-            padding-top: 276px;
+            padding-top: 171px;
             margin-bottom: 32px;
         }
     }
@@ -29,8 +29,8 @@
         margin-top: 80px;
         
         @include mq('desktop') {
-            margin-top: 42px;
-            margin-bottom: 188px;
+            margin-top: 53px;
+			margin-bottom: 110px;
         }
         
     }
@@ -39,7 +39,7 @@
         margin-top: 90px;
         
         @include mq('desktop') {
-            margin-top: 42px;
+            margin-top: 70px;
         }
     }
 
@@ -54,14 +54,14 @@
         background: transparent url('../svg/star-1.svg') 0 0 / contain no-repeat;
         
         @include mq('desktop') {
-            top: 129px;
+            top: 92px;
             width: 292px;
             height: 328px;
         }
     }
 
     &::after {
-        top: 37px;
+        top: 0;
         right: 96px;
         left: auto;
         width: 199px;

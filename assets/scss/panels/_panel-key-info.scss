@@ -74,6 +74,14 @@
             .heading {
                 color: $dark-green;    
             } 
+			
+			.content {
+				
+				a {
+					color: inherit;
+					font-weight: 700;
+				}
+			}
             
             .buttons-wrapper {
                 display: flex;
@@ -387,7 +395,6 @@
                     aspect-ratio: 1;
                     width: 100%;
                     height: auto;
-                    object-fit: cover;
                 }
             }
             

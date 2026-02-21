@@ -5,3 +5,9 @@
 .image {
     
 }
+
+picture,
+.frame,
+img {
+	object-fit: cover;
+}

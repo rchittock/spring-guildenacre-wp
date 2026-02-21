@@ -1,7 +1,5 @@
-<div class="container">
+<div class="container container-wide">
 
-	<div class="frame-border">
-		<?php echo get_sub_field('code_embed'); ?>
-	</div>
+	<?php echo do_shortcode(get_sub_field('code_embed')); ?>	
 	
 </div>

@@ -6,7 +6,7 @@
 		
 		<div class="page-content">
 			
-			<?php include('panels.php'); ?>	
+			<?php the_content(); ?>	
 			
 		</div>
 		

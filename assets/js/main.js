@@ -70,7 +70,6 @@ jQuery(document).ready(function ($) {
 	const $slider = $wrap.find('.stories');
 	const $btns   = $wrap.find('.stories-nav .story-button');
 	
-	// Sync active state on init + after change
 	$slider.on('init', function (e, slick) {
 		$btns.removeClass('is-active');
 		$btns.filter('[data-slide="0"]').addClass('is-active');
@@ -81,7 +80,6 @@ jQuery(document).ready(function ($) {
 		$btns.filter('[data-slide="' + currentSlide + '"]').addClass('is-active');
 	});
 	
-	// Click pager -> go to slide
 	$btns.on('click', function () {
 		const index = parseInt(this.dataset.slide, 10);
 		$slider.slick('slickGoTo', index);
@@ -99,6 +97,25 @@ jQuery(document).ready(function ($) {
 		infinite: true
 	});
 	
+	
+	/* What's on Event Carousel */
+	
+	var carouselSlidesToShow = 1;
+	if ( isDesktop() ) {
+		carouselSlidesToShow = 3;
+	}
+	
+	$('.carousel').slick({
+		slidesToShow: carouselSlidesToShow,
+		slidesToScroll: 1,
+		centerMode: true,
+		centerPadding: '0px',
+		arrows: true,
+		dots: false,
+		infinite: true,
+		prevArrow: $('.panel-whats-on-carousel .slider-arrow-prev'),
+		nextArrow: $('.panel-whats-on-carousel .slider-arrow-next'),
+	});
 	
 	/* What's on Event Filters */
 	
@@ -315,4 +332,13 @@ jQuery(document).ready(function ($) {
 		}
 	});
 	
+	
+	/* WC Product */
+	
+	if ( $('.flex-control-thumbs a').length ) {
+		$('.flex-control-thumbs a').click(function() {
+			$('.flex-control-thumbs a').removeClass('flex-active');
+			$(this).addClass('flex-active');
+		})
+	}
 });

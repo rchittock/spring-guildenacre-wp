@@ -36,7 +36,10 @@ input[type="submit"] {
 	@include transition();
 }
 
-.heading {
+.heading,
+.product_title,
+ul.products li.product .woocommerce-loop-product__title,
+ul.products li.product .price {
 	@include font_decorative();
 	color: $light-gold;
 	font-weight: 400;
@@ -87,7 +90,9 @@ input[type="submit"] {
 	}
 }
 
-.heading-4 {
+.heading-4,
+.woocommerce .related ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product .price {
 	font-size: 26px;
 	line-height: 35px;
 	letter-spacing: 10px;
@@ -103,7 +108,8 @@ input[type="submit"] {
 	line-height: 35px;
 }
 
-.heading-5 {
+.heading-5,
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
 	font-size: 28px;
 	line-height: 28px;
 	letter-spacing: 5px;
@@ -130,6 +136,18 @@ input[type="submit"] {
 	@include mq('desktop') {
 		font-size: 20px;
 		line-height: 30px;
+		letter-spacing: 15px;
+	}
+}
+
+.heading-7 {
+	// font-size: 16px;
+	// line-height: 20px;
+	// letter-spacing: 2.5px;
+	
+	@include mq('desktop') {
+		font-size: 15px;
+		line-height: 25px;
 		letter-spacing: 15px;
 	}
 }
