@@ -61,11 +61,7 @@ function editor_styles() {
 function scripts() {
 	return gulp.src([
 		'assets/js/fitvids.js',
-		//'assets/js/jquery.cookie.js',
-		//'assets/js/jquery.bxslider.min.js',
 		'assets/js/slick.min.js',
-		//'assets/js/imagesloaded.pkgd.min.js',
-		//'assets/js/masonry.pkgd.min.js',
 		'node_modules/glightbox/dist/js/glightbox.min.js',
 		'assets/js/main.js'
 	])
@@ -76,19 +72,19 @@ function scripts() {
 	.pipe(browserSync.stream());
 }
 
-function svg() {
-	return gulp.src('assets/svg/**/*', { base: 'assets/svg' })
-	.pipe(gulp.dest('public/svg'));
+function images() {
+	return gulp.src('assets/images/**/*', { base: 'assets/images', encoding: false })
+		.pipe(gulp.dest('public/images'));
 }
 
-function images() {
-	return gulp.src('assets/images/**/*', { base: 'assets/images' })
-	.pipe(gulp.dest('public/images'));
+function svg() {
+	return gulp.src('assets/svg/**/*', { base: 'assets/svg', encoding: false })
+		.pipe(gulp.dest('public/svg'));
 }
 
 function fonts() {
-	return gulp.src('assets/fonts/**/*', { base: 'assets/fonts' })
-	.pipe(gulp.dest('public/fonts'));
+	return gulp.src('assets/fonts/**/*', { base: 'assets/fonts', encoding: false })
+		.pipe(gulp.dest('public/fonts'));
 }
 
 function watchFiles() {

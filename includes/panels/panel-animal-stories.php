@@ -28,20 +28,25 @@ $story_panel_id = rand();
 				
 			<div class="stories">
 				<?php while( have_rows('stories') ): the_row(); ?>
-					<?php if( get_row_layout() == 'story' ): ?>
-						<div class="story">
-	
-							<div class="media-frame">
-								<?php include('components/image.php'); ?>
-								<?php include('components/video.php'); ?>
+					<?php if( get_row_layout() == 'story' ):
+						$style = '';
+						$background_image = get_sub_field('background_image');
+						if ( !empty($background_image) ) :
+							$style = ' style="background-image: url('. $background_image['url'] . ')"';
+						endif; ?>
+						<div class="story story-star-position-<?php echo get_sub_field('star_position'); ?>">
+							<div class="inner"<?php echo $style; ?>>
+								<div class="media-frame">
+									<div class="masked masked-animal-stories">
+										<?php include('components/image.php'); ?>
+										<?php include('components/video.php'); ?>
+									</div>
+								</div>
+								<h3 class="heading heading-3">
+									<?php include('components/heading.php'); ?>
+								</h3>
+								<?php include('components/content.php'); ?>
 							</div>
-							
-							<h2 class="heading heading-3">
-								<?php include('components/heading.php'); ?>
-							</h2>
-	
-							<?php include('components/content.php'); ?>
-	
 						</div>
 						
 					<?php endif; ?>

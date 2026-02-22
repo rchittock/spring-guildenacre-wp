@@ -111,4 +111,12 @@
             height: 397px;
         }
     }
+	
+	&.panel-left-star-position-hidden,
+	&.panel-right-star-position-hidden {
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
 }

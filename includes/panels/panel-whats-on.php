@@ -1,9 +1,11 @@
 <div class="container container-wide">
 
 	<div class="panel-header">
-		<h2 class="heading heading-2">
-			<?php include('components/heading.php'); ?>
-		</h2>
+		<?php if ( get_sub_field( 'heading' ) != '' ) : ?>
+			<h2 class="heading heading-2">
+				<?php include('components/heading.php'); ?>
+			</h2>
+		<?php endif; ?>
 		<div class="filters">
 			<?php if ( get_sub_field('show_activity_type') == 1 ) : ?>
 				<select class="filter filter-activity-type" name="activity-type">

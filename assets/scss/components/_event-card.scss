@@ -12,14 +12,13 @@
 		color: $dark-green;
 	}
 	
-	img {
+	.masked {
 		position: absolute;
 		left: 0;
 		right: 0;
 		width: calc(100% - 120px);
 		height: 254px;
 		margin: -48px auto 0;
-		border-radius: 50%;
 		aspect-ratio: 275 / 254px;
 		max-width: 275px;
 		
@@ -28,6 +27,11 @@
 			height: 330px;
 			max-width: 348px;
 			margin-top: -74px;
+		}
+		
+		img {
+			height: 100%;
+			width: 100%;
 		}
 	}
 	
@@ -44,34 +48,6 @@
 		margin-top: 20px;
 	}
 	
-	.info {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		gap: 10px;
-		align-items: center;
-		margin-top: 12px;
-		
-		@include mq('desktop') {
-			flex-direction: row;
-			gap: 22px;
-		}
-		
-		.age-range {
-			display: flex;
-			justify-content: center;
-			gap: 12px;
-			align-items: center;
-		}
-		
-		.price {
-			display: flex;
-			justify-content: center;
-			gap: 8px;
-			align-items: center;
-		}
-	}
-	
 	.button {
 		margin-top: 30px;
 		border-radius: 124.5px;
@@ -82,5 +58,33 @@
 		@include mq('desktop', 'max') {
 			width: auto;
 		}
+	}
+}
+
+.info {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 10px;
+	align-items: center;
+	margin-top: 12px;
+	
+	@include mq('desktop') {
+		flex-direction: row;
+		gap: 22px;
+	}
+	
+	.age-range {
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		align-items: center;
+	}
+	
+	.price {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		align-items: center;
 	}
 }

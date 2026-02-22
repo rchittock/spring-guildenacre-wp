@@ -1,9 +1,5 @@
 <?php if( have_rows('popups') ): ?>
 	
-	<div class="divider mobile-divider">
-		<?php load_svg('quick-action-divider-mobile'); ?>
-	</div>
-	
 	<div class="container">	
 		<div class="popup-icons">
 			<?php while( have_rows('popups') ): the_row(); ?>

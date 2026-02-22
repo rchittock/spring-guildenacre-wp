@@ -1,0 +1,21 @@
+.panel-code-embed-with-content {
+	
+	.columns {	
+		display: grid;
+		gap: 40px;
+		
+		@include mq('desktop') {
+			grid-template-columns: 1fr 500px;
+			gap: 100px;
+		}
+		
+		@include mq('xl') {
+			grid-template-columns: 1fr 600px;
+			gap: 229px;
+		}
+		
+		.heading {
+			margin-bottom: 43px;	
+		}
+	}
+}

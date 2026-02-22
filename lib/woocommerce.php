@@ -30,15 +30,27 @@ add_action('woocommerce_after_main_content', 'hooks_close_div', 33);
 remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
 add_action( 'woocommerce_after_single_product', 'woocommerce_output_related_products', 20);
 
+function related_products_start() {
+	echo '<section class="panel panel-related-products">';
+	echo '<div class="container container-wide">';
+}
+add_action( 'woocommerce_after_single_product', 'related_products_start', 19 );
+
+function related_products_end() {
+	echo '</div>';
+	echo '</section>';
+}
+add_action( 'woocommerce_after_single_product', 'related_products_end', 21 );
+
+
 add_filter('woocommerce_product_related_products_heading', function(){return false;});
 
 function custom_woocommerce_product_loop_start( $html ) {
 	if ( wc_get_loop_prop( 'name', 'related' ) && is_single() ) {
-		$html = '
-			<div class="panel-header">
+		$html = '<div class="panel-header">
 				<h4 class="heading heading-2">Similar products</h4>
 				<a href="#events" class="button" target="_blank">See all products</a>
-			</div>' 
+			</div>'
 			. $html;
 	}
 	return $html;
@@ -119,17 +131,17 @@ add_filter( 'woocommerce_single_product_carousel_options', 'custom_update_woo_fl
 // Remove tabs
 add_filter( 'woocommerce_product_tabs', '__return_empty_array', 98 );
 
-// Description
-function short_description_add_content(){
-	echo '<h3 class="heading heading-7">Description</h3>';
-	echo '<div class="content">' . get_the_content() . '</div>';
-}
-add_action( 'woocommerce_single_product_summary', 'short_description_add_content', 15 );
+// Replace Short Description with Long
+// function short_description_add_content(){
+	// echo '<h3 class="heading heading-7">Description</h3>';
+	// echo '<div class="content">' . get_the_content() . '</div>';
+// }
+// add_action( 'woocommerce_single_product_summary', 'short_description_add_content', 15 );
 
-function woocommerce_template_single_excerpt() {
-	return;
-}
-remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+// function woocommerce_template_single_excerpt() {
+	// return;
+// }
+// remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
 
 // Remove Category
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40, 0 );

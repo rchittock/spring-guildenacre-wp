@@ -1,11 +1,6 @@
 <div class="container container-wide">
 
-	<div class="panel-header">
-		<h2 class="heading heading-2">
-		    <?php include('components/heading.php'); ?>
-		</h2>
-		<?php include('components/button.php'); ?>
-	</div>
+	<?php include('components/panel-header.php'); ?>
 	
 	<?php if( have_rows('faqs') ): ?>
 		<div class="accordions">

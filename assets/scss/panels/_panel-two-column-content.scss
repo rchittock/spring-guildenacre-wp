@@ -8,22 +8,6 @@
         margin-top: 80px;
     }
     
-    .content {
-        
-        h1, h2, h3, h4, h5, h6 {
-            @include font_decorative();
-            font-size: 25px;
-            line-height: 35px;
-            letter-spacing: 1px;
-            font-weight: 400;
-            margin-bottom: 0;
-        }
-        
-        a {
-            font-weight: 800;
-        }
-    }
-    
     .columns {
         display: grid;
         gap: 40px;

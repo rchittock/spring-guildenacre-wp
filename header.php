@@ -21,16 +21,19 @@
 		<?php $post = $announcement; ?>
 		<?php setup_postdata( $post ); ?> 
 			<aside class="announcement-bar">
-				<div class="container">
+				<div class="container container-wide">
 					<?php the_post_thumbnail(); ?>
 					<?php the_content(); ?>
+					<button class="mobile-menu-toggle" aria-label="Open Mobile Menu">
+						<?php load_svg('hamburger'); ?>
+					</button>
 				</div>
 			</aside>
 		<?php wp_reset_postdata(); ?>
 	<?php endif; ?>
 	
 	<header class="header">
-		<div class="container">
+		<div class="container container-wide">
 			
 			<?php if ( have_rows( 'header_button' , 'option' ) ) : ?>
 				<?php while ( have_rows( 'header_button' , 'option' ) ) : the_row(); 
@@ -60,3 +63,25 @@
 			
 		</div>
 	</header>
+	
+	<aside class="mobile-menu">
+		<div class="container container-wide">	
+			<a href="<?php echo home_url(); ?>" class="logo" aria-label="Go to Homepage">
+				<?php load_svg('logo'); ?>
+			</a>	
+			<?php
+			wp_nav_menu( array( 
+				'container_class' => 'primary-menu', 
+				'theme_location' =>  'primary-menu', 
+				'container' => 'nav',
+				'menu_class' => 'menu'
+			) );
+			?>
+			<button class="mobile-menu-toggle" aria-label="Open Mobile Menu">
+				<?php load_svg('hamburger'); ?>
+			</button>
+		</div>
+	</aside>
+	
+	<div class="js-cont">
+		<div class="js-scroll">

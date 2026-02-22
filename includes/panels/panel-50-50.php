@@ -22,7 +22,7 @@
 		
 		<div class="column column-media">
 	
-			<div class="media-frame">
+			<div class="media-frame masked masked-5050-<?php echo get_sub_field('circle_orientation'); ?>">
 				<?php include('components/image.php'); ?>
 				<?php //include('components/video.php'); ?>
 			</div>

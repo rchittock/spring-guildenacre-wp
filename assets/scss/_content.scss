@@ -39,7 +39,8 @@ input[type="submit"] {
 .heading,
 .product_title,
 ul.products li.product .woocommerce-loop-product__title,
-ul.products li.product .price {
+ul.products li.product .price,
+.mobile-menu .container .primary-menu a {
 	@include font_decorative();
 	color: $light-gold;
 	font-weight: 400;
@@ -109,7 +110,8 @@ ul.products li.product .price {
 }
 
 .heading-5,
-.woocommerce ul.products li.product .woocommerce-loop-product__title {
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.mobile-menu .container .primary-menu a {
 	font-size: 28px;
 	line-height: 28px;
 	letter-spacing: 5px;
@@ -156,9 +158,24 @@ img {
 	max-width: 100%;
 }
 
+
+
 .content {
 	
-	& > *:not(:last-child) {
+	h1, h2, h3, h4, h5, h6 {
+		@include font_decorative();
+		font-size: 25px;
+		line-height: 35px;
+		letter-spacing: 1px;
+		font-weight: 400;
+		margin-bottom: 0;
+	}
+	
+	a {
+		font-weight: 700;
+	}
+	
+	& > *:is(p, ul, ol, blockquote, img):not(:last-child) {
 		margin-bottom: 30px;
 	}
 }

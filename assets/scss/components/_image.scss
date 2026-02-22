@@ -11,3 +11,41 @@ picture,
 img {
 	object-fit: cover;
 }
+
+.masked {
+	mask-repeat: no-repeat;
+	mask-size: 100% 100%;
+	mask-mode: luminance;
+}
+
+.masked-5050-left {
+	mask-image: url('../images/frames/5050-left.png');
+}
+
+.masked-5050-right {
+	mask-image: url('../images/frames/5050-right.png');
+}
+
+.masked-animal-stories {
+	mask-image: url('../images/frames/animal-stories.png');
+}
+
+.masked-event-card {
+	mask-image: url('../images/frames/event-card.png');
+}
+
+.masked-media-1 {
+	mask-image: url('../images/frames/media-1.png');
+}
+
+.masked-media-2 {
+	mask-image: url('../images/frames/media-2.png');
+}
+
+.masked-media-3 {
+	mask-image: url('../images/frames/media-3.png');
+}
+
+.masked-media-4 {
+	mask-image: url('../images/frames/media-4.png');
+}

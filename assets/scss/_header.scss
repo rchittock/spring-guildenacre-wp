@@ -1,4 +1,48 @@
+.header,
+.mobile-menu {
+
+	.logo {
+		margin-top: 21px;
+		
+		&,
+		svg,
+		img {
+			display: inline-block;
+			width: 159px;
+			height: auto;
+			
+			@include mq('desktop') {
+				width: 297px;
+			}
+		}
+	}
+	
+	.mobile-menu-toggle {
+		margin-top: 50px;
+		
+		@include mq('desktop') {
+			margin-top: 19px;
+		}
+		
+		&,
+		svg {
+			width: 58px;
+			height: auto;
+			
+			@include mq('desktop') {
+				width: 58px;
+			}
+		}
+	}
+}
+
 .header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 9000;
 	
 	@include mq('desktop') {
 		padding-top: 70px;
@@ -14,23 +58,11 @@
 		max-width: none;
 		
 		@include mq('desktop') {
-			padding-inline: 148px;
 			min-height: 172px;
 		}
 	}
 	
 	.logo {
-		
-		&,
-		svg,
-		img {
-			width: 159px;
-			height: auto;
-			
-			@include mq('desktop') {
-				width: 297px;
-			}
-		}
 		
 		@include mq('desktop') {
 			position: absolute;
@@ -46,14 +78,89 @@
 			display: none;	
 		}
 	}
+}
+
+.mobile-menu {
+	position: fixed;
+	inset: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	min-height: 100vh;
+	z-index: 99999;
+	background-color: $green;
+	text-align: center;
 	
-	.mobile-menu-toggle {
-		margin-top: 19px;
+	display: none;
+	
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 40px;
+		align-items: flex-start;
 		
-		&,
-		svg {
-			width: 62px;
-			height: auto;
+		@include mq('desktop') {
+			justify-content: space-between;
+		}
+		
+		.logo {
+			order: 1;
+			
+			@include mq('desktop') {
+				margin-top: 70px;
+			}
+		}
+		
+		.primary-menu {
+			order: 3;
+			
+			@include mq('desktop', 'max') {
+				flex: 0 0 100%;
+			}
+			
+			@include mq('desktop') {
+				display: grid;
+				place-items: center;
+				height: 100%;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				order: 2;
+			}
+			
+			a {
+				margin-bottom: 34px;
+				display: inline-block;
+				text-align: center;
+				text-shadow: 0 0 105px $light-gold;
+			}
+			
+			.menu-btn a {
+				display: inline-flex;
+				max-height: 65px;
+				padding: 13px 35px;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				border-radius: 124.5px;
+				background: $dark-gold;
+				margin-bottom: 50px;
+				color: $green;
+			}
+		}
+		
+		.mobile-menu-toggle {
+			order: 2;
+			
+			@include mq('desktop', 'max') {
+				margin-left: auto;
+			}
+			
+			@include mq('desktop') {
+				margin-top: 89px;
+				order: 3;
+			}
 		}
 	}
 }

@@ -4,14 +4,13 @@
 
     booking-form {
 		text-align: center;
-		padding: 20px;
 		display: block;
 		max-width: 800px;
 		margin: 0 auto;
-        border: 1px solid $light-gold;
         
         @include mq('desktop') {
             padding: 66px 100px;
+			background: transparent url('../images/beyonk.png') center center / 100% 100% no-repeat;
         }
     }
 }

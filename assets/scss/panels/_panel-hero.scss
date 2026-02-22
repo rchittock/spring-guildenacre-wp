@@ -1,10 +1,10 @@
 .panel-hero {
+	--mobile-padding-top: 200px;
+	--desktop-margin-bottom: 172px;
+	--desktop-padding-top: 419px;
+	
     position: relative;
     text-align: center;
-    
-    @include mq('desktop') {
-        margin-bottom: 172px;
-    }
     
     .sub-heading,
     .heading {
@@ -12,11 +12,9 @@
     }
     
     .sub-heading {
-        padding-top: 90px;
         margin-bottom: 10px;
         
         @include mq('desktop') {
-            padding-top: 171px;
             margin-bottom: 32px;
         }
     }

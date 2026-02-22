@@ -3,14 +3,14 @@
     .form-frame {
         
         @include mq('desktop') {
-            padding: 66px 100px;
-            border: 1px solid $light-gold;
+            padding: 80px 100px;
+			background: transparent url('../images/contact-form.png') center center / 100% 100% no-repeat;
         }
     }
 
     .heading {
         text-align: center;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
         
         font-size: 50px;
         line-height: 65px;
@@ -21,6 +21,7 @@
     }
 
     .nf-form-cont {
+		max-width: 1000px;
         
         .nf-form-fields-required {
             display: none;

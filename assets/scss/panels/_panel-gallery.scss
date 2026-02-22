@@ -36,7 +36,8 @@
             gap: 40px 50px;   
         }
         
-        .frame {
+        a {
+			display: block;
             aspect-ratio: 252 / 204;
             
             @include mq('tablet') {

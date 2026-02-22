@@ -1,0 +1,19 @@
+.panel-404 {
+	padding-top: 200px;
+	text-align: center;
+	
+	@include mq('desktop') {
+		padding-top: 400px;
+	}
+	
+	.container {
+		display: flex;
+		justify-content: center;
+		gap: 40px;
+		flex-direction: column;
+	}
+	
+	.heading {
+		color: $off-white;
+	}
+}

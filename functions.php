@@ -42,12 +42,7 @@ add_post_type_support( 'page', 'excerpt' );
 //Menus
 register_nav_menus(
 	array(  
-		'primary' => __( 'Primary Navigation Right', $prefix),
-		
-		'footer-menu-1' => __( 'Footer Menu 1 Navigation', $prefix),
-		'footer-menu-2' => __( 'Footer Menu 2 Navigation', $prefix),
-		'footer-menu-3' => __( 'Footer Menu 3 Navigation', $prefix),
-		
+		'primary-menu' => __( 'Primary Menu Navigation', $prefix),
 		'footer-mobile-menu-1' => __( 'Footer Menu 1 Navigation', $prefix),
 		'footer-mobile-menu-2' => __( 'Footer Menu 2 Navigation', $prefix),
 	)
@@ -62,7 +57,7 @@ function custom_enqueue_styles() {
 	
 	//JS
 	wp_enqueue_script('jquery-ui-datepicker');
-	
+	wp_enqueue_script( 'TweenMax', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js', array('jquery'), THEME_VERSION, true);
 	wp_enqueue_script( 'moment', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js', array('jquery'), THEME_VERSION, true);
 	wp_enqueue_script( 'daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array('jquery'), THEME_VERSION, true);
 	wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?loading=async&key=' . GOOGLE_API_KEY, array('jquery'), THEME_VERSION, true);
@@ -202,21 +197,41 @@ add_action( 'init', 'create_taxonomies', 0 );
 // }
 // add_filter( 'query_vars', 'custom_add_query_vars_filter' );
 
-// function get_date_string($start_date, $end_date, $custom_date_text, $date_format = 'j F Y') {
-	// 
-	// $date_string = '';
-	// 
-	// if ( $custom_date_text != '' ) :
-	// 	$date_string = $custom_date_text;
-	// else : 
-	// 	$date_string = $start_date->format($date_format);
-	// 	if ( $start_date->format($date_format) != $end_date->format($date_format) ) :
-	// 		$date_string .= ' - ' . $end_date->format($date_format);
-	// 	endif;
-	// endif;
-	// 
-	// return $date_string;	
-// }
+function get_panel_spacing_style() {
+	
+	$spacing = get_sub_field( 'spacing' );
+
+	if ( empty( $spacing ) ) {
+		return '';
+	}
+
+	$breakpoints = [ 'mobile', 'tablet', 'desktop' ];
+
+	$properties = [
+		'margin_top'    => 'margin-top',
+		'margin_bottom' => 'margin-bottom',
+		'padding_top'   => 'padding-top',
+		'padding_bottom'=> 'padding-bottom',
+	];
+
+	$vars = [];
+
+	foreach ( $breakpoints as $bp ) {
+		if ( empty( $spacing[ $bp ] ) ) {
+			continue;
+		}
+		foreach ( $properties as $field_key => $shorthand ) {
+			$value = $spacing[ $bp ][ $field_key ];
+			if ( $value !== '' && $value !== null ) {
+				$vars[] = "--{$bp}-{$shorthand}: {$value}px";
+			}
+		}
+	}
+
+	return ! empty( $vars )
+		? ' style="' . implode( '; ', $vars ) . '"'
+		: '';
+}
 
 function get_panel_classes($panel) {
 	
@@ -660,6 +675,70 @@ function event_search() {
 }
 add_action( 'wp_ajax_event_search', 'event_search' );
 add_action( 'wp_ajax_nopriv_event_search', 'event_search' );
+
+function get_event_age_range_string($post_id) {
+	
+	$age_range_text = get_field('age_range_text');
+	$age_range_terms = get_the_terms($post->ID, 'event-age-range');
+	
+	$age_range_string = '';
+	
+	if ( $age_range_text != '' ) {
+		$age_range_string = $age_range_text;
+		
+	} else if ( !empty($age_range_terms) ) {
+		$age_range_string = $age_range_terms[0]->name;
+	}
+	
+	return $age_range_string;
+}
+
+function get_event_price_string($post_id) {
+	
+	$price = get_field('price');
+	$before_price_text = get_field('before_price_text');
+	$after_price_text = get_field('after_price_text');
+	
+	$price_range_string = '';
+	
+	if ( $price != '' ) :
+		
+		if ( $before_price_text != '' ) :
+			$price_range_string .= $before_price_text . ' ';
+		endif;
+		
+		$price_range_string .= '&pound;' . $price;
+		
+		if ( $after_price_text != '' ) :
+			$price_range_string .= ' ' . $after_price_text;
+		endif;
+		
+	endif;
+	
+	return $price_range_string;
+}
+
+function get_event_date_string($post_id) {
+	
+	$date_string = '';
+	
+	$acf_format = 'Y-m-d H:i:s';
+	
+	$start_raw = get_field('start_date', $post_id);
+	$end_raw   = get_field('end_date', $post_id);
+	
+	$start_date = $start_raw ? DateTime::createFromFormat($acf_format, $start_raw) : null;
+	$end_date   = $end_raw   ? DateTime::createFromFormat($acf_format, $end_raw) : null;
+		
+	if (!$start_date && !$end_date) {
+		$date_string = ''; // or fallback text
+	} else {
+		$custom_date_text = get_field('custom_date_text', $post_id);
+		$date_string = get_date_string($start_date, $end_date, $custom_date_text, 'd F');
+	}
+	
+	return $date_string;	
+}
 
 function get_date_string($start_date, $end_date, $custom_date_text, $date_format = 'j F Y') {
 	

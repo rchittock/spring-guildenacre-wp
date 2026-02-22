@@ -1,11 +1,123 @@
 .panel-homepage-hero {
+	z-index: 50;
+	
+	#parallax {
+		display: block;
+	}
+	
+	&,
+	.keyart,
+	.keyart-layer,
+	.keyart-layer img {
+		height: 100vh;		
+		
+		@include mq('tablet') {
+			max-height: 1000px;
+		}
+	}
+	
+	/* Parallax viewport */
+	.keyart {
+		position: relative;
+		z-index: 10;
+	}
+	
+	.keyart-layer {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		width: 100%;
+		min-width: 790px;
+		transform: translate3d(-50%, var(--y, 0), 0);
+		will-change: transform;
+		
+		@include mq('tablet') {
+			transform: translate3d(0, var(--y, 0), 0);
+			left: 0;
+		}
+		
+		img {
+			object-fit: contain;
+			object-position: bottom center;
+			width: 100%;
+			height: 100%;
+			
+			@include mq('tablet') {
+				object-fit: cover;
+			}
+			
+			&.mobile {
+				display: block;
+			
+				@include mq('tablet') {
+					display: none;
+				}
+			}
+			
+			&.tablet {
+				display: none;
+			
+				@include mq('tablet') {
+					display: block;
+				}
+			}
+		}
+	
+		&:first-child {
+			background-color: var(--hero-background);
+		}
+	
+		&.parallax {
+			position: fixed;
+		}
+	}
+}
 
-    .image {
-        
-    }
+.firefly-container {
+	overflow: hidden;
+}
 
-    .heading {
-        
-    }
+/* Fireflies */
+.firefly {
+	--firefly-size: 4px;
 
+	position: absolute;
+	width: var(--firefly-size);
+	height: var(--firefly-size);
+	border-radius: 50%;
+	background-color: $light-gold;
+	box-shadow: 0px 0px 17px 2px $light-gold;
+
+	@include mq('desktop') {
+		--firefly-size: 12px;
+	}
+}
+
+.scroll-down-anchor {
+	position: absolute;
+	bottom: 100px;
+	width: 220px;
+	left: calc(50% - 100px);
+	text-align: center;
+	
+	.text {
+		color: $off-white;
+		text-shadow: 0 0 105px #FFC87B;
+	}
+	
+	svg {
+		display: inline-block;
+		margin-top: 17px;
+	}
+}
+
+body:has(.panel-homepage-hero) {
+	
+	.header {
+		
+		.button,
+		.logo {
+			opacity: 0;
+		}
+	}
 }

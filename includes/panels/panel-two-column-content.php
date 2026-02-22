@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-wide">
 
 	<?php if( have_rows('columns') ): ?>
 		<?php while( have_rows('columns') ): the_row(); ?>

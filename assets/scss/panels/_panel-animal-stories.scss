@@ -32,7 +32,8 @@
         .story-button {
             opacity: 0.5;
             
-            &.is-active {
+            &.is-active,
+			&:hover {
                 opacity: 1;
                 filter: drop-shadow(0 0 10px $light-gold); 
             }
@@ -60,12 +61,23 @@
         .story {
             position: relative;
             color: $dark-green;
-            padding: 160px 34px 84px;
-            background-color: $paper;
-            
-            @include mq('desktop') {
-                padding: 363px 90px 96px;
-            }
+			background: transparent url('../images/animal-stories.png') center center / 100% 100% no-repeat;
+			padding: 60px 34px 84px;
+			
+			@include mq('desktop') {
+				padding: 100px 90px 96px;
+			}
+			
+			.inner {
+				background-position: center center;
+				background-size: contain;
+				background-repeat: no-repeat;
+				padding: 100px 0 0;
+				
+				@include mq('desktop') {
+					padding: 263px 0 0;
+				}
+			}
             
             .media-frame {
                 position: absolute;
@@ -80,7 +92,6 @@
                 &,
                 img,
                 video {
-                    border-radius: 50%;
                     width: 235px;
                     height: 226px;
                     
@@ -89,7 +100,34 @@
                         height: 495px;
                     }   
                 }
+				
+				&::before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: 10;
+					width: 166px;
+					height: 185px;
+					background: transparent url('../svg/stars-animal-stories.svg') center center / contain no-repeat;
+				}
             }
+			
+			&.story-star-position-left {
+				
+				.media-frame::before {
+					left: 0;
+					right: auto;
+				}
+			}
+			
+			&.story-star-position-right {
+				
+				.media-frame::before {
+					left: auto;
+					right: 0;
+				}
+			}
 
             .heading {
                 color: $dark-green;

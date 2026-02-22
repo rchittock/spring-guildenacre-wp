@@ -1,90 +1,258 @@
-jQuery(document).ready(function ($) {
-	
+jQuery(document).ready(function($) {
+
 	var tabletSize = 768;
 	var desktopSize = 1280;
 
 	function isMobile() {
 		return $(window).width() < tabletSize;
 	}
-	
+
 	function isTablet() {
 		return $(window).width() >= tabletSize && $(window).width() < desktopSize;
 	}
-	
+
 	function isDesktop() {
 		return $(window).width() >= desktopSize;
 	}
-	
+
 	function isTabletDesktop() {
 		return $(window).width() >= tabletSize;
 	}
-	
+
 	function isMobileTablet() {
 		return $(window).width() < desktopSize;
 	}
-	
+
+
+	/* ---------- Smooth Scroll ---------- */
+	const body = document.body;
+	const jsScroll = document.querySelector('.js-scroll');
+	const jsCont = document.querySelector('.js-cont');
+	let offset = 0;
+	const ease = 0.1;
+	let contentHeight = 0;
+
+	function useSmoothScroll() {
+
+		return false;
+
+		// Only use the fake smooth scroll for mobile / tablet
+		//return !!jsScroll && isTabletDesktop(); // (same logic as you had)
+	}
+
+	function measureHeight() {
+		if (!jsScroll) return;
+
+		if (!useSmoothScroll()) {
+			// Desktop: normal page
+			body.style.height = ''; // let CSS/layout decide
+			jsScroll.style.transform = 'none';
+			offset = window.pageYOffset || 0;
+
+			// keep contentHeight usable for clampOffset on desktop if needed
+			contentHeight = document.documentElement.scrollHeight;
+			return;
+		}
+
+		// MOBILE/TABLET SMOOTH MODE:
+		// Just read the live height of the scrolling content.
+		// Do NOT set body.style.height here.
+		contentHeight = jsScroll.scrollHeight;
+	}
+
+	function clampOffset(y) {
+		if (!contentHeight) return y;
+		const max = Math.max(0, contentHeight - window.innerHeight);
+		return Math.max(0, Math.min(y, max));
+	}
+
+	// Initial
+	measureHeight();
+
+	window.addEventListener('load', () => {
+		measureHeight();
+	});
+	window.addEventListener('resize', () => {
+		measureHeight();
+	});
+
+	function tick() {
+		const target = window.pageYOffset || 0;
+
+		if (useSmoothScroll()) {
+			// Keep height in sync *read-only* every frame
+			measureHeight();
+
+			offset += (target - offset) * ease;
+			offset = clampOffset(offset);
+
+			jsScroll.style.transform = `translate3d(0, ${-offset}px, 0)`;
+		} else {
+			offset = target;
+			jsScroll.style.transform = 'none';
+		}
+
+		setParallaxY(offset);
+
+		requestAnimationFrame(tick);
+	}
+
+	requestAnimationFrame(tick);
+
+	/* ---------- Parallax setup ---------- */
+	const layers = Array.from(document.querySelectorAll('.parallax'));
+
+	function setParallaxY(yTop = 0) {
+		for (const layer of layers) {
+			let speed = 0;
+			if (isMobile()) {
+				speed = parseFloat(layer.getAttribute('data-speed-mobile')) || 0;
+			} else {
+				speed = parseFloat(layer.getAttribute('data-speed')) || 0;
+			}
+			const y = -(yTop * speed / 100);
+			// CSS expects transform: translate3d(..., var(--y), ...)
+			layer.style.setProperty('--y', y + 'px');
+		}
+	}
+
+	/* Fireflies */
+	var fireflies = 25;
+	var $container = $(".firefly-container");
+	var $containerWidth = $container.innerWidth();
+	var $containerHeight = $container.innerHeight();
+
+	// how far from the edge to stay so the glow isn't cut off
+	var EDGE_MARGIN = 80; // adjust to match your glow radius
+
+	function updateBounds() {
+		$containerWidth = $container.innerWidth();
+		$containerHeight = $container.innerHeight();
+	}
+
+	function randX() {
+		var max = Math.max(0, $containerWidth - EDGE_MARGIN * 2);
+		return EDGE_MARGIN + Math.random() * max;
+	}
+
+	function randY() {
+		var max = Math.max(0, $containerHeight - EDGE_MARGIN * 2);
+		return EDGE_MARGIN + Math.random() * max;
+	}
+
+	// keep bounds in sync with layout
+	$(window).on("resize", updateBounds);
+
+	updateBounds();
+
+	for (var i = 0; i < fireflies; i++) {
+		var $ff = $('<div class="firefly"></div>');
+		TweenLite.set($ff, {
+			x: randX(),
+			y: randY(),
+			opacity: 1
+		});
+		$container.append($ff);
+		startFadeOnce($ff);
+		flyTheFirefly($ff);
+	}
+
+	function startFadeOnce($elm) {
+		var node = $elm[0];
+		if (node._fadeTl) return;
+
+		node._fadeTl = new TimelineMax({
+			delay: Math.floor(Math.random() * 2) + 1,
+			repeatDelay: Math.floor(Math.random() * 6) + 1,
+			repeat: -1
+		}).to($elm, 0.25, {
+			opacity: 0.25,
+			yoyo: true,
+			repeat: 1,
+			repeatDelay: 0.2
+		});
+	}
+
+	function flyTheFirefly($elm) {
+		var dur = 20 + Math.random() * 40; // 20–60s per “hop”
+		TweenMax.to($elm, dur, {
+			x: randX(),
+			y: randY(),
+			ease: Power1.easeInOut,
+			onComplete: flyTheFirefly,
+			onCompleteParams: [$elm]
+		});
+	}
+
+
+	/* Mobile Menu */
+
+	$('.mobile-menu-toggle').click(function() {
+		$('.mobile-menu').fadeToggle();
+	});
+
 	/* Scroll Animations */
-	
+
 	$.fn.isInViewport = function() {
 		var elementTop = $(this).offset().top;
 		var elementBottom = elementTop + $(this).outerHeight();
-		
+
 		var viewportTop = $(window).scrollTop();
 		var viewportBottom = viewportTop + $(window).height();
-		
+
 		return elementBottom > viewportTop && elementTop < viewportBottom;
 	};
-	
+
 	function run_animation() {
-	
-		$('.panel').each( function(i){
-			
+
+		$('.panel').each(function(i) {
+
 			var element = $(this);
-			
-			animate_element( element );
+
+			animate_element(element);
 		});
 	}
-	
+
 	run_animation();
-	
+
 	$(document).on('scroll', function() {
 		run_animation();
 	});
-	
-	function animate_element( element ) {
-		 
+
+	function animate_element(element) {
+
 		if ($(element).isInViewport()) {
-			
-			if( !element.hasClass('animation-running') ) {
-				
-				setTimeout(function() { 
+
+			if (!element.hasClass('animation-running')) {
+
+				setTimeout(function() {
 					$(element).addClass('animation-running');
 				}, 10);
 			}
-		}	    
+		}
 	}
-	
+
 	/* Stories Slider */
-	
-	const $wrap   = $('.panel-animal-stories');
+
+	const $wrap = $('.panel-animal-stories');
 	const $slider = $wrap.find('.stories');
-	const $btns   = $wrap.find('.stories-nav .story-button');
-	
-	$slider.on('init', function (e, slick) {
+	const $btns = $wrap.find('.stories-nav .story-button');
+
+	$slider.on('init', function(e, slick) {
 		$btns.removeClass('is-active');
 		$btns.filter('[data-slide="0"]').addClass('is-active');
 	});
-	
-	$slider.on('afterChange', function (e, slick, currentSlide) {
+
+	$slider.on('afterChange', function(e, slick, currentSlide) {
 		$btns.removeClass('is-active');
 		$btns.filter('[data-slide="' + currentSlide + '"]').addClass('is-active');
 	});
-	
-	$btns.on('click', function () {
+
+	$btns.on('click', function() {
 		const index = parseInt(this.dataset.slide, 10);
 		$slider.slick('slickGoTo', index);
 	});
-	  
+
 	$slider.slick({
 		fade: true,
 		slidesToShow: 1,
@@ -96,15 +264,15 @@ jQuery(document).ready(function ($) {
 		adaptiveHeight: false,
 		infinite: true
 	});
-	
-	
+
+
 	/* What's on Event Carousel */
-	
+
 	var carouselSlidesToShow = 1;
-	if ( isDesktop() ) {
+	if (isDesktop()) {
 		carouselSlidesToShow = 3;
 	}
-	
+
 	$('.carousel').slick({
 		slidesToShow: carouselSlidesToShow,
 		slidesToScroll: 1,
@@ -116,110 +284,109 @@ jQuery(document).ready(function ($) {
 		prevArrow: $('.panel-whats-on-carousel .slider-arrow-prev'),
 		nextArrow: $('.panel-whats-on-carousel .slider-arrow-next'),
 	});
-	
+
 	/* What's on Event Filters */
-	
+
 	var start = moment().subtract(29, 'days');
 	var end = moment();
-	
+
 	function cb(start, end) {
 		$('#event-dates span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 	}
-	
+
 	$('#event-dates').daterangepicker({
 		startDate: start,
 		endDate: end,
 		opens: 'left'
 	}, cb);
-	
+
 	cb(start, end);
-	
+
 	$('#event-dates').on('apply.daterangepicker', function(ev, picker) {
 		console.log('apply.daterangepicker');
 		$('#date_selected').val('true');
 		search_events();
 	});
-	
+
 	$('#event-dates').on('cancel.daterangepicker', function(ev, picker) {
 		console.log('cancel.daterangepicker');
 		$('#date_selected').val('false');
 		search_events();
 	});
-	
+
 	$('.filter-activity-type').change(function(e) {
 		e.preventDefault();
 		$(this).parent().toggleClass('active');
 		search_events();
 	});
-	
+
 	$('.filter-age-range').change(function(e) {
 		e.preventDefault();
 		search_events();
 	});
-	
+
 	$('.clear-dates .btn').click(function(e) {
 		e.preventDefault();
 		$("#event-start-date").val('');
 		$("#event-end-date").val('');
 		search_events();
 	});
-	
+
 	function search_events() {
-		
-		var daterangepicker = $('#event-dates').data('daterangepicker');		
+
+		var daterangepicker = $('#event-dates').data('daterangepicker');
 		console.log(daterangepicker);
-		
+
 		var date_selected = $('#date_selected').val() == 'true';
-		
-		var start_date = ( date_selected && daterangepicker !== undefined) ? daterangepicker.startDate.format('YYYY-MM-DD') : '';
-		var end_date = ( date_selected && daterangepicker !== undefined) ? daterangepicker.endDate.format('YYYY-MM-DD') : '';
-		
-		let activity_type = [];		
+
+		var start_date = (date_selected && daterangepicker !== undefined) ? daterangepicker.startDate.format('YYYY-MM-DD') : '';
+		var end_date = (date_selected && daterangepicker !== undefined) ? daterangepicker.endDate.format('YYYY-MM-DD') : '';
+
+		let activity_type = [];
 		const activity_type_value = $('.filter-activity-type').val();
-		if (activity_type_value != 'Activity Type' ) {
+		if (activity_type_value != 'Activity Type') {
 			activity_type = [activity_type_value];
 		} else {
 			activity_type = $('.filter-activity-type:checked').map(function() {
 				return this.value;
 			}).get();
 		}
-		
-		let age_range = [];		
+
+		let age_range = [];
 		const age_range_value = $('.filter-age-range').val();
-		if (age_range_value != 'Age Range' ) {
+		if (age_range_value != 'Age Range') {
 			age_range = [age_range_value];
 		} else {
 			age_range = $('.filter-age-range:checked').map(function() {
 				return this.value;
 			}).get();
 		}
-		
+
 		var results = '';
-		
+
 		$('.filter-results').addClass('loading');
-		
+
 		jQuery.post(
-			core.ajax_url, 
-			{
+			core.ajax_url, {
 				'action': 'event_search',
 				'start_date': start_date,
 				'end_date': end_date,
 				'activity_type': activity_type,
 				'age_range': age_range
-			}, 
+			},
 			function(response) {
 				results = response;
-				
+
 				$('.filter-results').removeClass('loading');
 				$('.filter-results').html(results);
 			}
-		);	
+		);
 	}
-	
-	
+
+
 	/* Gallery */
-	
-	if ( isMobileTablet() ) {
+
+	if (isMobileTablet()) {
 		$('.images-grid').slick({
 			slidesToShow: 1,
 			slidesToScroll: 1,
@@ -231,93 +398,6 @@ jQuery(document).ready(function ($) {
 			infinite: true
 		});
 	}
-	
-	
-	/* Tabbed Content */
-	
-	$('.panel-key-info .tab-button').click(function() {
-
-		var target = $(this).data('tab');
-		
-		$('.panel-key-info .tab-button').removeClass('active');
-		$(this).addClass('active');
-		
-		$('.panel-key-info .tab').removeClass('active');
-		$('.panel-key-info #tab_' + target).addClass('active');
-		
-	});
-
-
-	/* Calendar */ 
-	
-	const calendarEl = document.getElementById('calendar');
-	if (!calendarEl) return;
-	
-	const $openingStatus = $('#opening-status');
-	const $openingDates = $('#opening-dates');
-	const $openingTimes  = $('#opening-times');
-	const $openingContent  = $('#opening-content');
-	
-	const startDate = new Date();
-	startDate.setDate(startDate.getDate());
-	console.log(startDate);
-	
-	const cal = new FullCalendar.Calendar(calendarEl, {
-		initialView: 'dayGridMonth',
-		initialDate: startDate,
-		headerToolbar: { left: 'prev', center: 'title', right: 'next' },
-		nowIndicator: true,
-		height: 'auto',
-		contentHeight: 'auto',
-		events: [],
-		firstDay: 1,
-		dayHeaderFormat: {
-			 weekday: 'short'
-		},
-		
-		dayHeaderContent: function(arg) {
-			return arg.date.toLocaleDateString('en-GB', { weekday: 'short' }).charAt(0);
-		},
-		
-		dateClick: function(info) {
-			console.log('Clicking');
-			
-			const selected = info.dateStr; // YYYY-MM-DD
-			
-			var body = {
-				url: core.ajax_url,
-				method: 'POST',
-				dataType: 'json',
-				data: {
-					action: 'venue_open_status',
-					nonce: core.nonce,
-					date: selected
-				}
-			};
-			
-			console.log(body);
-			
-			$.ajax(body)
-				.done(function(resp){
-					if (resp && resp.success) {
-						console.log(resp.data);
-						$openingStatus.html(resp.data.opening_status);
-						$openingDates.html(resp.data.opening_dates);
-						$openingTimes.html(resp.data.opening_times);
-						$openingContent.html('<p>' + resp.data.opening_content + '</p>');
-						
-					} else {
-						$msg.text(resp?.data?.message || 'Sorry, something went wrong.');
-					}
-				})
-				.fail(function(xhr){
-					$msg.text('Request failed. Please try again.');
-					console.log(xhr.responseText);
-				});
-		}
-	});
-	
-	cal.render();
 	
 	/* Lightboxes */
 	
@@ -335,10 +415,97 @@ jQuery(document).ready(function ($) {
 	
 	/* WC Product */
 	
-	if ( $('.flex-control-thumbs a').length ) {
+	if ($('.flex-control-thumbs a').length) {
 		$('.flex-control-thumbs a').click(function() {
 			$('.flex-control-thumbs a').removeClass('flex-active');
 			$(this).addClass('flex-active');
 		})
 	}
+
+
+	/* Tabbed Content */
+
+	$('.panel-key-info .tab-button').click(function() {
+
+		var target = $(this).data('tab');
+
+		$('.panel-key-info .tab-button').removeClass('active');
+		$(this).addClass('active');
+
+		$('.panel-key-info .tab').removeClass('active');
+		$('.panel-key-info #tab_' + target).addClass('active');
+
+	});
+
+
+	/* Calendar */
+
+	const calendarEl = document.getElementById('calendar');
+	if (!calendarEl) return;
+
+	const $openingStatus = $('#opening-status');
+	const $openingDates = $('#opening-dates');
+	const $openingTimes = $('#opening-times');
+	const $openingContent = $('#opening-content');
+
+	const startDate = new Date();
+	startDate.setDate(startDate.getDate());
+	console.log(startDate);
+
+	const cal = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		initialDate: startDate,
+		headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+		nowIndicator: true,
+		height: 'auto',
+		contentHeight: 'auto',
+		events: [],
+		firstDay: 1,
+		dayHeaderFormat: {
+			weekday: 'short'
+		},
+
+		dayHeaderContent: function(arg) {
+			return arg.date.toLocaleDateString('en-GB', { weekday: 'short' }).charAt(0);
+		},
+
+		dateClick: function(info) {
+			console.log('Clicking');
+
+			const selected = info.dateStr; // YYYY-MM-DD
+
+			var body = {
+				url: core.ajax_url,
+				method: 'POST',
+				dataType: 'json',
+				data: {
+					action: 'venue_open_status',
+					nonce: core.nonce,
+					date: selected
+				}
+			};
+
+			console.log(body);
+
+			$.ajax(body)
+				.done(function(resp) {
+					if (resp && resp.success) {
+						console.log(resp.data);
+						$openingStatus.html(resp.data.opening_status);
+						$openingDates.html(resp.data.opening_dates);
+						$openingTimes.html(resp.data.opening_times);
+						$openingContent.html('<p>' + resp.data.opening_content + '</p>');
+
+					} else {
+						$msg.text(resp?.data?.message || 'Sorry, something went wrong.');
+					}
+				})
+				.fail(function(xhr) {
+					$msg.text('Request failed. Please try again.');
+					console.log(xhr.responseText);
+				});
+		}
+	});
+
+	cal.render();
 });

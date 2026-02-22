@@ -17,7 +17,7 @@ if ( $global_panel ) :
 				$panel_classes = get_panel_classes($panel);
 				
 				$background_image = get_sub_field( 'background_image' );			
-				$panel_styles = ''; ?>
+				$panel_styles = $panel_styles = get_panel_spacing_style();  ?>
 				
 				<section id="panel-<?php echo $panel_id; ?>" class="panel <?php echo rtrim(implode(' ', $panel_classes)); ?>"<?php echo $panel_styles; ?>>		
 				
@@ -26,6 +26,11 @@ if ( $global_panel ) :
 				</section>
 				
 				<?php
+				
+				if ( $panel == 'homepage-hero' ) : 
+					$has_hero = true; ?>
+					<div class="page-background">
+				<?php endif;
 				
 				$panel_id++;
 				$style = '';
